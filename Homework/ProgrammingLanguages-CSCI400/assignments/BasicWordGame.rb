@@ -115,7 +115,6 @@ class WordGame
   - other bookkeeping (e.g., setting totals to 0, etc.) can be coded however you see fit.
 =end
   def get_quartiles(scores)
-    print"Get: ",  scores, "\n"
     quart = 0
     (0..(scores.length/4 - 1)).each{|n| quart += scores[n]}
     yield quart
@@ -138,7 +137,6 @@ Hint:
 - you can pass parameters to methods that contain a yield (not shown in slide)
 =end  
   def display_quartiles(scores)
-    print "Disp: ", scores, "\n"
     get_quartiles(scores) {|quart| print "Quartile total: #{quart}\n"}
     print "\n"
   end
@@ -164,3 +162,31 @@ puts "\nUnit tests follow..."
 Add a unit test to test the two word scores displayed above (hello and banana)
 and at least 3 others.
 =end
+class TestWordGame < MiniTest::Unit::TestCase
+  def setup
+    @game = WordGame.new
+  end
+
+  def test_wordscores
+    assert_equal 7, @game.word_score("hello")
+    assert_equal 9, @game.word_score("banana")
+  end
+
+  def test_scoreslist
+    scores = @game.create_scores
+    assert_equal 8, scores.length
+    score = 100
+    scores.each {|s| assert_equal score, s; score-=10}
+  end
+
+  def test_quartiles
+    scores = [0, 1, 2, 3]
+    index = 0
+    @game.get_quartiles(scores) {|quart| puts "index: #{index}, score: #{scores[index]}, quart: #{quart}"; assert_equal scores[index], quart; index = index + 1}
+  end
+
+  def test_countletters
+    assert_equal 0, @game.count_letters("")
+    assert_equal 2, @game.count_letters("Alfalfa")
+  end
+end
