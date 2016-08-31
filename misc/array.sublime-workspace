@@ -1,0 +1,539 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"i",
+				"inc	#include \"…\""
+			],
+			[
+				"new",
+				"newdata"
+			],
+			[
+				"return",
+				"return_value"
+			],
+			[
+				"value",
+				"value"
+			],
+			[
+				"pipe",
+				"read_pipe"
+			],
+			[
+				"env",
+				"envpath"
+			],
+			[
+				"cstr",
+				"c_str"
+			],
+			[
+				"hist",
+				"history_length-1"
+			],
+			[
+				"do",
+				"doitagain"
+			],
+			[
+				"string",
+				"stringpath"
+			],
+			[
+				"last",
+				"lastCMD"
+			],
+			[
+				"c",
+				"c_str"
+			],
+			[
+				"H",
+				"HIST_ENTRY"
+			],
+			[
+				"history",
+				"history_total_bytes"
+			],
+			[
+				"Pred",
+				"PredecessorFunction"
+			],
+			[
+				"Argum",
+				"ArgumentNameN"
+			],
+			[
+				"Ar",
+				"ArgumentName1"
+			],
+			[
+				"Arg",
+				"ArgumentName0"
+			],
+			[
+				"Func",
+				"FunctionName"
+			],
+			[
+				"lst",
+				"lstlisting"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/home/ocket8888/git/SensibleLib/array.h",
+			"settings":
+			{
+				"buffer_size": 4205,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/ocket8888/git/SensibleLib/install.sh",
+			"settings":
+			{
+				"buffer_size": 441,
+				"line_ending": "Unix",
+				"name": "#!/bin/sh"
+			}
+		},
+		{
+			"file": "/home/ocket8888/git/SensibleLib/string.h",
+			"settings":
+			{
+				"buffer_size": 1748,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/ocket8888/git/SensibleLib/test.cpp",
+			"settings":
+			{
+				"buffer_size": 341,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/Makefile/Make.sublime-build",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Makefile/Make.sublime-build",
+					""
+				],
+				[
+					"Packages/Makefile/Make.sublime-build",
+					"Clean"
+				]
+			],
+			[
+				"Packages/Makefile/Make.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 96.0,
+		"last_filter": "Package Control: install p",
+		"selected_items":
+		[
+			[
+				"Package Control: install p",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: remove pa",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: install",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: remove pac",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: insta",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: remove p",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 132.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)",
+			"ls",
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/ocket8888/git/SensibleLib/Makefile",
+		"/home/ocket8888/git/SensibleLib/array.cpp",
+		"/home/ocket8888/lib/vector.h",
+		"/home/ocket8888/lib/test.cpp",
+		"/home/ocket8888/lib/test.c",
+		"/home/ocket8888/lib/array.h",
+		"/home/ocket8888/Freenet/jSite/index.html",
+		"/home/ocket8888/Downloads/shell_outline/bfieck-project2/src/builtins.h",
+		"/home/ocket8888/Downloads/shell_outline/bfieck-project2/src/builtins.cpp",
+		"/home/ocket8888/Downloads/shell_outline/bfieck-project2/src/makefile",
+		"/home/ocket8888/songs",
+		"/home/ocket8888/Downloads/shell_outline/bfieck-project2/README",
+		"/home/ocket8888/Downloads/shell_outline/bfieck-project2/src/shell.cpp",
+		"/home/ocket8888/Downloads/0ce5f7a791469ca3e05c6a9eaf72c757.log",
+		"/home/ocket8888/Downloads/shell_outline/bfieck-project2/src/utilities.h",
+		"/home/ocket8888/Downloads/shell_outline/bfieck-project2/src/utilities.cpp",
+		"/home/ocket8888/Downloads/shell_outline/builtins.h",
+		"/home/ocket8888/Downloads/shell_outline/builtins.cpp",
+		"/home/ocket8888/Downloads/shell_outline/shell.cpp",
+		"/home/ocket8888/Downloads/shell_outline/makefile",
+		"/home/ocket8888/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
+		"/home/ocket8888/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
+		"/home/ocket8888/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/ocket8888/git/bbos/localpackages.tex",
+		"/home/ocket8888/songs.txt",
+		"/home/ocket8888/git/bbos/chapters/02.tex",
+		"/home/ocket8888/git/bbos/main.tex",
+		"/home/ocket8888/git/bbos/chapters/01.tex",
+		"/home/ocket8888/.config/sublime-text-3/Packages/User/Distraction Free.sublime-settings",
+		"/home/ocket8888/git/bbos/README.md",
+		"/home/ocket8888/git/bbos/LSP/langsci.cls",
+		"/home/ocket8888/git/bbos/LSP/lsp-seriesinfo/seriesinfo.tex",
+		"/home/ocket8888/git/bbos/localmetadata.tex",
+		"/home/ocket8888/git/bbos/localcommands.tex",
+		"/home/ocket8888/test.asm",
+		"/home/ocket8888/java/template.java",
+		"/home/ocket8888/java/hello.java",
+		"/home/ocket8888/java/hello.class",
+		"/home/ocket8888/Makefile",
+		"/home/ocket8888/Documents/hw1"
+	],
+	"find":
+	{
+		"height": 25.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"*"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"sz",
+			"size",
+			"exists",
+			"splitTokens",
+			"jobNum",
+			"write_pipe",
+			"read_pipe",
+			"printHist",
+			"printHistory",
+			"ctr",
+			"jobNum",
+			"splitTokens",
+			"execute_e",
+			"printf",
+			"mall",
+			"execute_line",
+			"execute_extern",
+			"add_history",
+			"cannot",
+			"\\lsImpressum",
+			"bbos",
+			"\\newcommand{\\lsSeries}",
+			"\\newcommand{\\lsSeries",
+			"lsSeriesColor",
+			"lsSeriesC",
+			"lsCoverBlockColor"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/home/ocket8888/git/SensibleLib/array.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4205,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								537,
+								537
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 357.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/home/ocket8888/git/SensibleLib/install.sh",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 441,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								441,
+								441
+							]
+						],
+						"settings":
+						{
+							"auto_name": "#!/bin/sh",
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/home/ocket8888/git/SensibleLib/string.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1748,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1190,
+								1190
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 204.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 3,
+					"file": "/home/ocket8888/git/SensibleLib/test.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 341,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								201,
+								201
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.5,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 106.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/Makefile/Make.sublime-build",
+	"project": "array.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "shu",
+		"selected_items":
+		[
+			[
+				"shu",
+				"~/Downloads/shell_outline/shell.sublime-project"
+			],
+			[
+				"nu",
+				"~/src/nuke.sublime-project"
+			],
+			[
+				"",
+				"~/git/bbos/chapters/bbos.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 200.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
