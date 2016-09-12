@@ -1,0 +1,3 @@
+{
+	"shell_cmd": "./TSP-Code.py < cities.txt"
+}
