@@ -1,9 +1,0 @@
-product 'dangleberry'
-packing_slip 'number1'
-packing_slip 'number2'
-
-activate
-
-pay 'rent'
-
-
