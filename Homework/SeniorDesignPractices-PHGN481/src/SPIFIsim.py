@@ -83,6 +83,7 @@ zvals=range(0,m)
 
 Intensities=dict()
 
+#find the intensity for waves passing through each part of the object at any time T
 for time in times:
 	Intensities[time] = list()
 	for y in yvals:
