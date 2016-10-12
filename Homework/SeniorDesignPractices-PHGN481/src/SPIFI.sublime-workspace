@@ -1,0 +1,957 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"pand",
+				"panda_intensity"
+			],
+			[
+				"Int",
+				"Intensities"
+			],
+			[
+				"panda",
+				"panda_data"
+			],
+			[
+				"In",
+				"Intensities"
+			],
+			[
+				"mod",
+				"modulation_frequency"
+			],
+			[
+				"Obj",
+				"objectArr"
+			],
+			[
+				"in",
+				"initial"
+			],
+			[
+				"objec",
+				"objectArr"
+			],
+			[
+				"obj",
+				"objectArr"
+			],
+			[
+				"as",
+				"asnr\tassert_nothing_raised(..) { .. }"
+			],
+			[
+				"f",
+				"fetchRecipies"
+			],
+			[
+				"fet",
+				"fetchRecipiesByQuery"
+			],
+			[
+				"mo",
+				"modules"
+			],
+			[
+				"recipies",
+				"recipies_response"
+			],
+			[
+				"sla",
+				"slackAPI"
+			],
+			[
+				"upload",
+				"uploadLatex"
+			],
+			[
+				"ove",
+				"overwatch_parse"
+			],
+			[
+				"stea",
+				"steamurl_parse"
+			],
+			[
+				"form",
+				"formattedLine"
+			],
+			[
+				"text",
+				"textBuilder"
+			],
+			[
+				"ow",
+				"ow_synonymns"
+			],
+			[
+				"def",
+				"def\tFunction"
+			],
+			[
+				"O",
+				"ORIG_DIR"
+			],
+			[
+				"lis",
+				"listenChannels"
+			],
+			[
+				"assert",
+				"assert_nil"
+			],
+			[
+				"Mes",
+				"test_messageCount"
+			],
+			[
+				"Em",
+				"EmailLogMain"
+			],
+			[
+				"time",
+				"timearr"
+			],
+			[
+				"date",
+				"datearr"
+			],
+			[
+				"dateT",
+				"datetimeRegEx"
+			],
+			[
+				"A",
+				"ARGV"
+			],
+			[
+				"get",
+				"get_adjective"
+			],
+			[
+				"disp",
+				"display_score"
+			],
+			[
+				"for",
+				"forin\tfor … in … done"
+			],
+			[
+				"List",
+				"LIST"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "empty_grid",
+			"settings":
+			{
+				"buffer_size": 205,
+				"encoding": "UTF-8",
+				"line_ending": "Unix",
+				"name": "10 10"
+			}
+		},
+		{
+			"file": "center_hole",
+			"settings":
+			{
+				"buffer_size": 397,
+				"encoding": "UTF-8",
+				"line_ending": "Unix",
+				"name": "10 10"
+			}
+		},
+		{
+			"file": "SPIFIsim.py",
+			"settings":
+			{
+				"buffer_size": 3938,
+				"encoding": "UTF-8",
+				"line_ending": "Unix",
+				"name": "#!/usr/bin/python3"
+			}
+		},
+		{
+			"file": "/home/ocket8888/.config/matplotlib/matplotlibrc",
+			"settings":
+			{
+				"buffer_size": 20,
+				"encoding": "UTF-8",
+				"line_ending": "Unix",
+				"name": "backend      : template"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 272.0,
+		"last_filter": "inst",
+		"selected_items":
+		[
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 503.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/ocket8888/Homework/Algorithms-CSCI406/assignments/TSP-Code.py",
+		"/home/ocket8888/Homework/Algorithms-CSCI406/assignments/input2.txt",
+		"/home/ocket8888/Homework/Algorithms-CSCI406/assignments/input1.txt",
+		"/home/ocket8888/Homework/ProgrammingLanguages-CSCI400/assignments/processor.rb",
+		"/home/ocket8888/Homework/ProgrammingLanguages-CSCI400/assignments/badrules.txt",
+		"/home/ocket8888/Homework/ProgrammingLanguages-CSCI400/assignments/nyke",
+		"/home/ocket8888/Homework/ProgrammingLanguages-CSCI400/assignments/rule_set.rb",
+		"/home/ocket8888/Homework/ProgrammingLanguages-CSCI400/assignments/rulesTest.txt",
+		"/home/ocket8888/Homework/ProgrammingLanguages-CSCI400/assignments/rule_reader_test.rb",
+		"/home/ocket8888/Homework/ProgrammingLanguages-CSCI400/assignments/processor_runner.rb",
+		"/home/ocket8888/Homework/ProgrammingLanguages-CSCI400/assignments/processor_test.rb",
+		"/home/ocket8888/Homework/ProgrammingLanguages-CSCI400/assignments/test/processor.rb",
+		"/home/ocket8888/src/sp_web/superphage/views.py",
+		"/home/ocket8888/src/sp_web/sp_web/settings.py",
+		"/home/ocket8888/src/sp_web/superphage/urls.py",
+		"/home/ocket8888/src/sp_web/sp_web/urls.py",
+		"/home/ocket8888/Homework/SeniorDesignPractices-PHGN481/ref/SPIFI_MicrofluidicMask_Reconstruction.m",
+		"/home/ocket8888/Homework/SeniorDesignPractices-PHGN481/ref/Model for Trench Diffraction SPIFI.nb",
+		"/home/ocket8888/Downloads/Mathematica_11.0.0_LINUX.sh",
+		"/home/ocket8888/src/slackbot/modules/patch/patch_crontab",
+		"/home/ocket8888/src/slackbot/modules/recipe/recipe.py",
+		"/home/ocket8888/src/slackbot/modules/recipe/install.sh",
+		"/home/ocket8888/src/slackbot/modules/patch/steamurl_parse.py",
+		"/home/ocket8888/src/slackbot/botd",
+		"/home/ocket8888/src/slackbot/.gitignore",
+		"/home/ocket8888/src/slackbot/commander.py",
+		"/home/ocket8888/src/slackbot/modules/math/math.py",
+		"/home/ocket8888/src/slackbot/modules/patch/patch.py",
+		"/home/ocket8888/src/slackbot/install",
+		"/home/ocket8888/src/slackbot/formatTest.py",
+		"/home/ocket8888/src/slackbot/modules/patch/install.sh",
+		"/home/ocket8888/src/slackbot/modules/math/install.sh",
+		"/home/ocket8888/src/slackbot/modules/patch/update.sh",
+		"/home/ocket8888/src/slackbot/modules/patch/overwatch_parse.py",
+		"/usr/local/lib/python3.5/dist-packages/slacker/utils.py",
+		"/usr/local/lib/python3.5/dist-packages/slacker/__init__.py",
+		"/home/ocket8888/src/slackbot/modules/items.py",
+		"/home/ocket8888/src/slackbot/modules/patch.py",
+		"/home/ocket8888/src/slackbot/modules/steamurl_parse.py",
+		"/home/ocket8888/src/slackbot/modules/update.sh",
+		"/home/ocket8888/src/slackbot/test",
+		"/home/ocket8888/src/slackbot/heroes.py",
+		"/home/ocket8888/src/slackbot/modules/test.py",
+		"/home/ocket8888/src/slackbot/modules/__init__.py",
+		"/home/ocket8888/Homework/ProgrammingLanguages-CSCI400/assignments/EmailLogTester.rb",
+		"/home/ocket8888/Homework/ProgrammingLanguages-CSCI400/assignments/mail.log",
+		"/home/ocket8888/Homework/ProgrammingLanguages-CSCI400/assignments/EmailLogMain.rb",
+		"/home/ocket8888/Homework/ProgrammingLanguages-CSCI400/assignments/RegExpFunTester.rb",
+		"/home/ocket8888/Homework/ProgrammingLanguages-CSCI400/assignments/RegExpFun.rb",
+		"/home/ocket8888/Homework/ProgrammingLanguages-CSCI400/assignments/BasicWordGame.rb",
+		"/home/ocket8888/Homework/ProgrammingLanguages-CSCI400/assignments/scramble.rb",
+		"/home/ocket8888/Homework/ProgrammingLanguages-CSCI400/assignments/words.rb",
+		"/home/ocket8888/Homework/ProgrammingLanguages-CSCI400/assignments/words_test.rb",
+		"/home/ocket8888/src/ctsc/makefile",
+		"/home/ocket8888/src/ctsc/tsc.cc",
+		"/home/ocket8888/src/TypeScript/src/compiler/commandLineParser.ts",
+		"/home/ocket8888/src/ctsc/ts.cc",
+		"/home/ocket8888/src/ctsc/filemap.cc",
+		"/home/ocket8888/src/ctsc/filemap.h",
+		"/home/ocket8888/src/ctsc/ts.h",
+		"/home/ocket8888/src/node_modules/tsc/bin/tsc.js",
+		"/home/ocket8888/src/node_modules/tsc/bin/tsc",
+		"/home/ocket8888/src/MyJunk/Homework/ProgrammingLanguages-CSCI400/assignments/words_test.rb",
+		"/home/ocket8888/src/freshinstall/packages.pack",
+		"/home/ocket8888/src/freshinstall/packages.ppa",
+		"/home/ocket8888/Downloads/packages.txt",
+		"/home/ocket8888/src/MyJunk/Homework/ProgrammingLanguages-CSCI400/assignments/words.rb",
+		"/home/ocket8888/src/MyJunk/Homework/ProgrammingLanguages-CSCI400/assignments/hangman.rb",
+		"/home/ocket8888/src/freshinstall/freshinstall.sh",
+		"/home/ocket8888/Documents/Homework/assignments/CSCI400-Programming_Languages/BasicWordGame.rb",
+		"/home/ocket8888/src/phs/python/intro/prime_finder.py",
+		"/home/ocket8888/src/phs/python/intro/prime_answer.py",
+		"/home/ocket8888/src/phs/python/intro/intro_to_python.py",
+		"/home/ocket8888/src/phs/python/data_fitting/plotting.py",
+		"/home/ocket8888/src/phs/python/data_fitting/my_fit.py",
+		"/home/ocket8888/src/phs/python/data_fitting/make_data.py",
+		"/home/ocket8888/src/phs/python/data_fitting/fit.py",
+		"/home/ocket8888/src/phs/python/collatz/collatz.py",
+		"/home/ocket8888/src/freshinstall/packages",
+		"/home/ocket8888/.ssh/id_rsa.pub",
+		"/home/ocket8888/.bashrc"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"99",
+			"1 ",
+			"1,",
+			"0,",
+			"0",
+			"RuleSet.instance",
+			"Ogr",
+			"Crimson Guard",
+			"Armlet",
+			"else if",
+			"\\n\")",
+			"print",
+			"pack "
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "empty_grid",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 205,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6,
+								6
+							]
+						],
+						"settings":
+						{
+							"auto_name": "10 10",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "center_hole",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 397,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								9,
+								9
+							],
+							[
+								13,
+								13
+							],
+							[
+								17,
+								17
+							],
+							[
+								21,
+								21
+							],
+							[
+								25,
+								25
+							],
+							[
+								29,
+								29
+							],
+							[
+								33,
+								33
+							],
+							[
+								37,
+								37
+							],
+							[
+								41,
+								41
+							],
+							[
+								45,
+								45
+							],
+							[
+								49,
+								49
+							],
+							[
+								53,
+								53
+							],
+							[
+								57,
+								57
+							],
+							[
+								61,
+								61
+							],
+							[
+								65,
+								65
+							],
+							[
+								69,
+								69
+							],
+							[
+								73,
+								73
+							],
+							[
+								77,
+								77
+							],
+							[
+								81,
+								81
+							],
+							[
+								85,
+								85
+							],
+							[
+								89,
+								89
+							],
+							[
+								93,
+								93
+							],
+							[
+								97,
+								97
+							],
+							[
+								101,
+								101
+							],
+							[
+								105,
+								105
+							],
+							[
+								109,
+								109
+							],
+							[
+								113,
+								113
+							],
+							[
+								117,
+								117
+							],
+							[
+								121,
+								121
+							],
+							[
+								125,
+								125
+							],
+							[
+								129,
+								129
+							],
+							[
+								133,
+								133
+							],
+							[
+								137,
+								137
+							],
+							[
+								141,
+								141
+							],
+							[
+								145,
+								145
+							],
+							[
+								149,
+								149
+							],
+							[
+								153,
+								153
+							],
+							[
+								157,
+								157
+							],
+							[
+								161,
+								161
+							],
+							[
+								165,
+								165
+							],
+							[
+								169,
+								169
+							],
+							[
+								173,
+								173
+							],
+							[
+								177,
+								177
+							],
+							[
+								181,
+								181
+							],
+							[
+								189,
+								189
+							],
+							[
+								193,
+								193
+							],
+							[
+								197,
+								197
+							],
+							[
+								201,
+								201
+							],
+							[
+								205,
+								205
+							],
+							[
+								209,
+								209
+							],
+							[
+								213,
+								213
+							],
+							[
+								217,
+								217
+							],
+							[
+								225,
+								225
+							],
+							[
+								229,
+								229
+							],
+							[
+								233,
+								233
+							],
+							[
+								237,
+								237
+							],
+							[
+								241,
+								241
+							],
+							[
+								245,
+								245
+							],
+							[
+								249,
+								249
+							],
+							[
+								253,
+								253
+							],
+							[
+								257,
+								257
+							],
+							[
+								261,
+								261
+							],
+							[
+								265,
+								265
+							],
+							[
+								269,
+								269
+							],
+							[
+								273,
+								273
+							],
+							[
+								277,
+								277
+							],
+							[
+								281,
+								281
+							],
+							[
+								285,
+								285
+							],
+							[
+								289,
+								289
+							],
+							[
+								293,
+								293
+							],
+							[
+								297,
+								297
+							],
+							[
+								301,
+								301
+							],
+							[
+								305,
+								305
+							],
+							[
+								309,
+								309
+							],
+							[
+								313,
+								313
+							],
+							[
+								317,
+								317
+							],
+							[
+								321,
+								321
+							],
+							[
+								325,
+								325
+							],
+							[
+								329,
+								329
+							],
+							[
+								333,
+								333
+							],
+							[
+								337,
+								337
+							],
+							[
+								341,
+								341
+							],
+							[
+								345,
+								345
+							],
+							[
+								349,
+								349
+							],
+							[
+								353,
+								353
+							],
+							[
+								357,
+								357
+							],
+							[
+								361,
+								361
+							],
+							[
+								365,
+								365
+							],
+							[
+								369,
+								369
+							],
+							[
+								373,
+								373
+							],
+							[
+								377,
+								377
+							],
+							[
+								381,
+								381
+							],
+							[
+								385,
+								385
+							],
+							[
+								389,
+								389
+							],
+							[
+								393,
+								393
+							],
+							[
+								397,
+								397
+							]
+						],
+						"settings":
+						{
+							"auto_name": "10 10",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 2,
+					"file": "SPIFIsim.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3938,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2630,
+								2630
+							]
+						],
+						"settings":
+						{
+							"auto_name": "#!/usr/bin/python3",
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 855.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/home/ocket8888/.config/matplotlib/matplotlibrc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 20,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								20,
+								20
+							]
+						],
+						"settings":
+						{
+							"auto_name": "backend      : template",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.273792093704,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "SPIFI.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 1,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
