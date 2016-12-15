@@ -110,8 +110,13 @@ getPosition = do
             getPosition
         Right rawPosStr ->
             case (reads rawPosStr) of
+<<<<<<< HEAD
 		[] -> 
 		    do
+=======
+                [] -> 
+                    do
+>>>>>>> 4d0e588e1269c6c6dcfbf4a9b0db8dc12c2f9022
                     putStrLn "Invalid position."
                     printValidMoves
                     getPosition
