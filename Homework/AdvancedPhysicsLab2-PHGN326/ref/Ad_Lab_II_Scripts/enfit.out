@@ -1,0 +1,25 @@
+
+ORTHOGONAL DISTANCE REGRESSION
+
+MODEL1:
+
+
+Return Reason:
+ ['Sum of squares convergence'] 
+
+Estimated Parameters:
+ [  5.51812934 -37.20553693] 
+
+Parameter Standard Errors:
+ [  0.06020538  13.66976587] 
+
+Covariance Matrix:
+ [[  8.75178685e-01  -1.95769849e+02]
+ [ -1.95769849e+02   4.51178451e+04]] 
+
+Degrees of Freedom:	 2
+Chi-Square:		 0.252224660356
+Reduced Chi-Square:	 0.126112330178
+
+Model mystery peak Energy =  [-28.928342910938653, 0.0001] 
+
