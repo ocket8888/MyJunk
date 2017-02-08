@@ -49,7 +49,7 @@ if args.objfile:
 		parsed_obj = [[(100.0-float(y))/100.0 for y in x.split(" ")] for x in raw_obj]
 		objectArr = parsed_obj
 	except Exception:
-		print(Exception.message)
+		print(repr(Exception))
 		exit(-1)
 
 print(objectArr)
