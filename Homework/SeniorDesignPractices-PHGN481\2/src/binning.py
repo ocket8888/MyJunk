@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+#https://en.wikipedia.org/wiki/Freedman%E2%80%93Diaconis_rule
 
 import seaborn as sns
 import matplotlib.pyplot as plt
