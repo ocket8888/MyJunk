@@ -1,0 +1,138 @@
+\documentclass[12pt]{article}
+ \usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{float}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+%If you want to title your bold things something different just make another thing exactly like this but replace "problem" with the name of the thing you want, like theorem or lemma or whatever
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+%Good resources for looking up how to do stuff:
+%Binary operators: http://www.access2science.com/latex/Binary.html
+%General help: http://en.wikibooks.org/wiki/LaTeX/Mathematics
+%Or just google stuff
+ 
+\title{Quantum Computing Assignment 4}
+\author{Brennan W. Fieck}
+\date{February 13, 2017}
+\maketitle
+
+\begin{problem}{3.4.1}~\\
+\indent (b) Prove that any pure state $|\psi\rangle$ can be decomposed as $|\psi\rangle=\sum_i\alpha_i|\psi_i\rangle$
+where $\alpha_i=\sqrt{p(i)},p(i)=\langle\psi|P_i|\psi\rangle,$ and $|\psi_i\rangle=\frac{P_i|\psi\rangle}{\sqrt{p(i)}}$\\~\\
+\indent (c) Also prove that $\langle\psi_i|\psi_j\rangle=\delta_{i,j}$.
+\end{problem}
+
+\begin{proof}[Solution.]~\\
+\indent (b) In order for some pure state $|\psi\rangle$ to be in the same
+Hilbert space as the system it's attempting to describe, it must be the case
+that it can be formed from linear combinations of any valid basis vectors for
+that space. It must also be true that the probability of finding the system in
+any one of these basis states at any point in space-time must total to 100\% or
+the system is not fully described and thus the basis is invalid. Therefore, for
+any decomposition of the Identity into $\sum_iP_i$ projection operators, the sum
+of expectation values must satisfy
+$$\sum_i[p[i]]=\sum_i\left[\langle\psi|P_i|\psi\rangle\right]=1$$
+which is trivially satisfied if each constituent $|\psi_i\rangle$ that make up
+$|\psi\rangle$ takes the form $\frac{P_i|\psi\rangle}{\sqrt{p[i]}}$. In that
+case, the sum of expectation values can be reduced to:
+$$|\psi\rangle=\sum_i[\alpha_i|\psi_i\rangle]=\sum_i\left[\sqrt{p[i]}|\psi_i\rangle\right]$$
+$$=\sum_i\left[\sqrt{p[i]}\frac{P_i|\psi\rangle}{\sqrt{p[i]}}\right]=\sum_i\left[P_i|\psi\rangle\right]=I|\psi\rangle=|\psi\rangle$$\\
+\indent (c) If any given $|\psi_i\rangle$ is represented by projection of
+$|\psi\rangle$ where projection operators are given as the result of
+decomposition of the identity, it must be the case that each has been projected
+into orthogonal subspaces of the Hilbert space encompassing $|\psi\rangle$.
+Therefore, two constituents of $|\psi\rangle$, $|\psi_i\rangle$ and
+$|\psi_j\rangle$ are not orthogonal if and only if they have been projected to
+the same subspace, which is true if and only if they are the same state.
+\end{proof}
+
+\begin{problem}{3.5.3}
+Consider any linear transformation $T$ on a Hilbert space $\mathcal{H}$ of dimension $N$.
+This linear transformation $T$ induces a transformation $\rho\mapsto T\rho T^\dagger$
+on the set of linear operators on the Hilbert space $\mathcal{H}$. Prove that the above
+transformation is also linear.
+\end{problem}
+
+\begin{proof}[Solution.]~\\
+First, if $T$ is linear, so is $T^\dagger$. Then, for any linear operation
+$(\rho|\psi\rangle)\in\mathcal{H}$, this induced transformation manifests as
+$(T\rho T^\dagger|\psi\rangle)\in\mathcal{H}$. Let
+$|\psi_a=T^\dagger|\psi\rangle$. Obviously, $|\psi_a\rangle$ has been obtained
+by linearly transforming $|\psi\rangle$ via $T^\dagger$. We have been given
+$\rho$ is a linear transformation, and that $T$ is a linear transformation.
+Thus we know that $T\rho|\psi_a\rangle$ linearly transforms $|\psi_a\rangle$,
+and it follows that the outcome of this is related via linear transformations
+(because that's all that has taken place) to $|\psi\rangle$. So it holds that
+$\rho\mapsto T\rho T^\dagger$ is a linear transformation.
+\end{proof}
+
+\begin{problem}{D1}
+Consider the operator on the Hilbert space $H_4$
+$$\rho=\frac{1}{4}(1-c)I_4+c(|0\rangle\otimes|0\rangle)(\langle0|\otimes\langle0|)$$
+where $0\leq c\leq1$ and $|0\rangle=(1,0)^T$. Does $\rho$ define a density matrix?
+(Why or why not?)
+\end{problem}
+
+\begin{proof}[Solution.]~\\
+It's simplest (though not fastest) to see $\rho$ in matrix form, and then
+decide if it is a density matrix.
+$$\rho=\frac{1-c}{4}I_4+c\left(\begin{bmatrix}
+1\\
+0\\
+0\\
+0
+\end{bmatrix}\right)\left(\begin{bmatrix}
+1 & 0 & 0 & 0
+\end{bmatrix}\right)$$
+$$=\frac{1-c}{4}I_4+\begin{bmatrix}
+c & 0 & 0 & 0\\
+0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0
+\end{bmatrix}=\begin{bmatrix}
+\frac{1+3c}{4} & 0 & 0 & 0\\
+0 & \frac{1-c}{4} & 0 & 0\\
+0 & 0 & \frac{1-c}{4} & 0\\
+0 & 0 & 0 & \frac{1-c}{4}
+\end{bmatrix}$$
+Because $\rho$ is diagonal, its determinant is the product of its diagonal
+elements. That is,
+$$|\rho|=\frac{-3c^4}{256}+\frac{c^3}{32}-\frac{3c^2}{128}+\frac{1}{256}$$
+which for $c$ within the given bounds is non-zero. Furthermore, the trace of
+$\rho$ is $\frac{1+3c}{4}+3\frac{1-c}{4}=1$ so $\rho$ can be said to be a valid
+density matrix.
+\end{proof}
+
+\begin{problem}{D2}
+Suppose that we expand a density matrix for $N$ qubits in terms of tensor products
+of Pauli spin matrices as
+$$\rho=\frac{1}{2^N}\sum_{j_0=0}^3\sum^3_{j_1=0}\cdots\sum^3_{j_{N-1}=0}c_{j_0j_1\cdots j_{N-1}}\sigma_{j_0}\otimes\sigma_{j_1}\cdots\otimes\sigma_{j_{N-1}},$$
+where $\sigma_0=I_2$.
+\begin{enumerate}[label=(\roman*)]
+\item What is the condition on the expansion coefficients if we impose $\rho=\rho^\dagger$?
+\item What is the condition on these coefficients if we impose tr $\rho=1$?
+\item Find (calculate) tr ($\rho\sigma_{k_0}\otimes\sigma_{k_1}\cdots\sigma_{k_{N-1}}$).
+\end{enumerate}
+\end{problem}
+
+\begin{proof}[Solution.]~\\
+\begin{enumerate}[label=(\roman*)]
+\item If it must be the case that $\rho=\rho^\dagger$, it must be the case that
+any given expansion coefficient $c=c^*\iff c\in\mathbb{R}$.
+\item Since tr$(S+T)=$ tr$(S)$ $+$ tr$(T)$, it must be the case that if
+tr$(\rho)=1$ the sum of all coefficients must be 1. That is
+$$\sum_i\left[c_i\right]=1$$
+\item Actually no idea.
+\end{enumerate}
+\end{proof}
+ 
+\end{document}
