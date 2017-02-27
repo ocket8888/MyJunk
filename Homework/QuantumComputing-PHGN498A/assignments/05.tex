@@ -1,0 +1,84 @@
+\documentclass[12pt]{article}
+ \usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{float}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+%If you want to title your bold things something different just make another thing exactly like this but replace "problem" with the name of the thing you want, like theorem or lemma or whatever
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+%Good resources for looking up how to do stuff:
+%Binary operators: http://www.access2science.com/latex/Binary.html
+%General help: http://en.wikibooks.org/wiki/LaTeX/Mathematics
+%Or just google stuff
+ 
+\title{Quantum Computing Assignment 5}
+\author{Brennan W. Fieck}
+\date{February 22, 2017}
+\maketitle
+
+\begin{problem}{E1}
+Pick one of the 4 Bell states $|\beta_{ij}\rangle,i,j=0,1$ (given on p. 75 of the
+textbook), and show that it is entangled.
+\end{problem}
+
+\begin{proof}[Solution.]~\\
+Most generally, to show that a 2-Qubit state $|\psi\rangle$ is entangled it must be shown
+that there are no values $(\alpha_0,\alpha_1,\beta_0,\beta_1)\in\mathbb{R}^4$ such 
+that $|\psi\rangle=(\alpha_0|0\rangle+\alpha_1|1\rangle)(\beta_0|0\rangle+\beta_1|1\rangle)$. Using the Bell state
+$|\beta_{00}\rangle=\frac{1}{\sqrt{2}}|00\rangle+\frac{1}{\sqrt{2}}|11\rangle$,
+we can see that this places the constraints that
+$$\frac{1}{\sqrt{2}}|00\rangle=\alpha_0\beta_0|00\rangle\to\alpha_0=\frac{1}{\beta_0\sqrt{2}}$$
+\centering and
+$$\frac{1}{\sqrt{2}}|11\rangle=\alpha_1\beta_1|11\rangle\to\alpha_1=\frac{1}{\beta_1\sqrt{2}}$$
+\raggedright
+However, since the Bell state has no $|01\rangle$ or $|10\rangle$ components,
+we also have the constraints:
+$$0|10\rangle=\alpha_1\beta_0|10\rangle\to0=\alpha_1\beta_0$$
+\centering and
+$$0|01\rangle=\alpha_0\beta_1|01\rangle\to0=\alpha_0\beta_1$$
+\raggedright This means that at least two of the values
+$(\alpha_0,\alpha_1,\beta_0,\beta_1)\in\mathbb{R}^4$ must be 0. However,
+according to the earlier constraints, setting any one of these values to 0
+requires that some other value approach $\infty$, which - strictly speaking
+- causes the group to lie outside $\mathbb{R}^4$. Therefore, $|\beta_{00}\rangle$
+cannot be written as the tensor product of two constituent states, which
+means that it is an entangled state.
+\end{proof}
+
+\begin{problem}{E2}
+Orthogonality on the Bloch sphere. Consider two points on the Bloch sphere:
+$|\psi\rangle$ with coordinates $(\theta,\phi)$ and $|\chi\rangle$ with
+coordinates $(\pi-\theta,\phi+\pi)$. Show that $|\chi\rangle$ and $|\psi\rangle$
+are orthogonal, i.e., $\langle\chi|\psi\rangle=0$.
+\end{problem}
+
+\begin{proof}[Solution.]~\\
+States on the Bloch sphere with some coordinates (in spherical coordinates with
+$r=1$) $(\alpha,\beta)$ are represented in the form
+$$\cos\left(\frac{\alpha}{2}\right)|0\rangle+e^{i\beta}\sin\left(\frac{\alpha}{2}\right)|1\rangle.$$
+To prove orthogonality, we can convert each state to this form and directly take
+the inner product ($\langle\gamma|\sigma\rangle=(|\gamma|^*)|\sigma|$)
+$$\langle\chi|\psi\rangle=\chi^*\psi=\left(\cos\left[\frac{\theta}{2}\right]|0\rangle+e^{i\phi}\sin\left[\frac{\theta}{2}\right]|1\rangle\right)^*\left(\cos\left[\frac{\pi-\theta}{2}\right]|0\rangle+e^{i(\phi+\pi)}\sin\left[\frac{\pi-\theta}{2}\right]|1\rangle\right)$$
+$$=\left(\cos\left[\frac{\theta}{2}\right]\langle0|+e^{-i\phi}\sin\left[\frac{\theta}{2}\right]\langle1|\right)\left(\cos\left[\frac{\pi-\theta}{2}\right]|0\rangle+e^{i(\phi+\pi)}\sin\left[\frac{\pi-\theta}{2}\right]|1\rangle\right)$$
+Because the states $|0\rangle$ and $|1\rangle$ are defined to be orthonormal, we know that
+$\langle i|j\rangle=\delta_{ij}$ and so this product can be simplified:
+$$\langle\chi|\psi\rangle=\cos\left[\frac{\theta}{2}\right]\cos\left[\frac{\pi-\theta}{2}\right]+e^{i(\phi+\pi-\phi)}\sin\left[\frac{\theta}{2}\right]\sin\left[\frac{\pi-\theta}{2}\right]$$
+Now employ some trigonometric identities, including the double-angle formula:
+$$\cos\left[\frac{\pi-x}{2}\right]=\sin\left[\frac{x}{2}\right]\to\langle\chi|\psi\rangle=\cos\left[\frac{\theta}{2}\right]\sin\left[\frac{\theta}{2}\right]+e^{i\pi}\sin\left[\frac{\theta}{2}\right]\sin\left[\frac{\pi-\theta}{2}\right]$$
+$$\frac{\sin\left[2x\right]}{2}=\sin[x]\cos[x]\to\langle\chi|\psi\rangle=\frac{\sin[\theta]}{2}+e^{i\pi}\sin\left[\frac{\theta}{2}\right]\sin\left[\frac{\pi-\theta}{2}\right]$$
+$$e^{i\pi}=-1\to\langle\chi|\psi\rangle=\frac{\sin[\theta]}{2}-\sin\left[\frac{\theta}{2}\right]\sin\left[\frac{\pi-\theta}{2}\right]$$
+$$\sin\left[\frac{\pi-x}{2}\right]=\cos\left[\frac{x}{2}\right]\to\langle\chi|\psi\rangle=\frac{\sin[\theta]}{2}-\sin\left[\frac{\theta}{2}\right]\cos\left[\frac{\theta}{2}\right]$$
+$$\frac{\sin\left[2x\right]}{2}=\sin[x]\cos[x]\to\langle\chi|\psi\rangle=\frac{\sin[\theta]}{2}-\frac{\sin[\theta]}{2}=0$$
+and therefore $|\chi\rangle$ and $|\psi\rangle$ are orthogonal.
+\end{proof}
+ 
+\end{document}
