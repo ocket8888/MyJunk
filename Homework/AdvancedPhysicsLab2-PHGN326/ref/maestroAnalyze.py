@@ -62,6 +62,7 @@ white = (255, 255, 255)
 black = (0, 0, 0)
 limeGreen = (50, 205, 50)
 paleBlue = (145, 163, 210)
+paleTurquoise = (175, 255, 222)
 
 pygame.init()
 screen = pygame.display.set_mode(screenSize)
@@ -91,7 +92,6 @@ class Button:
 		self.buttonSurface.blit(myText, ((self.width//2) - myText.get_width()//2, (self.height//2) - myText.get_height()//2))
 
 	def draw_button(self):
-		print(self.width, self.height)
 		surface = pygame.Surface((self.width, self.height))
 		surface.fill(self.color)
 		pygame.draw.rect(surface, (190,190,190), (1,1,self.width-1,self.height-1), 1)
@@ -119,6 +119,18 @@ class Button:
 						return True
 		return False
 
+class Infobox:
+	"""Displays info about a selected region"""
+	def __init__(self, x, y, bkgrndColor):
+		self.x = x
+		self.y = y
+		self.bkgrndColor = bkgrndColor
+		self.NetArea = 0
+		self.NetAreaError = 0
+		self.FWHM = 0
+
+		
+
 #define the graph's draw area
 graphSize = (900, 450)
 graphArea = pygame.Surface(graphSize)
@@ -126,7 +138,7 @@ graphOffset = (62, 106) #left offset, top offset)
 screen.blit(graphArea, graphOffset)
 
 #This function draws an arbitrary spectrum
-def drawSpectrum(spectrum):
+def drawSpectrum(spectrum, boundaries):
 	binNumber = 0
 	specMax =  max(spectrum)
 	graphSurface = pygame.Surface(graphSize)
@@ -134,7 +146,7 @@ def drawSpectrum(spectrum):
 	for Bin in spectrum:
 		binColor = ( 255 - int((specMax - Bin)*(255.0/specMax)), 32, int((specMax - Bin)*(255.0/specMax)))
 		for region in regions:
-			if Bin in range(region[0], region[1]+1):
+			if binNumber + boundaries[0] in range(region[0], region[1]+1):
 				binColor = limeGreen
 				break
 		pygame.draw.rect(graphSurface, binColor, (int(binNumber*(graphSize[0]/len(spectrum))), graphSize[1]-(Bin*graphSize[1]//specMax), (graphSize[0]/len(spectrum))-1, Bin*graphSize[1]//specMax))
@@ -142,10 +154,10 @@ def drawSpectrum(spectrum):
 	return graphSurface
 
 #This function toggles linear and logarithmic displays, for button use
-def linLogToggle(linear, spectrum):
+def linLogToggle(linear, spectrum, boundary):
 	if linear:
-		return drawSpectrum(spectrum)
-	return drawSpectrum([int(log(count + 1, 10)) for count in spectrum]) #adds 1 to avoid exploding on 0 count bins
+		return drawSpectrum(spectrum, boundary)
+	return drawSpectrum([log(count + 1, 10) for count in spectrum], boundary) #adds 1 to avoid exploding on 0 count bins
 
 #Checks if a mouse click happens inside a surface
 def inObject(mouse, obj):
@@ -158,41 +170,142 @@ def inObject(mouse, obj):
 	return False
 
 def selectBins(dragStart, dragEnd, spec):
-	print("Dragged from "+repr(dragStart)+ " to "+repr(dragEnd))
+	leftside, rightside = min((dragStart, dragEnd)), max((dragStart, dragEnd))
+	draggedSize = (rightside - leftside, graphSize[1])
+	draggedSurface = pygame.Surface(draggedSize)
+	draggedSurface.set_alpha(100)
+	draggedSurface.fill(paleBlue)
+	draggedBins = (leftside*len(spec)//graphSize[0], rightside*len(spec)//graphSize[0])
+	return (draggedSurface, leftside, draggedBins)
 
-graph = drawSpectrum(data).convert()
+#Yes this is basically just a list comprehension, yes doing it this way is probably slower
+#No, I don't care. It's way easier to read this way.
+def calculateSelectableRegions(boundaries):
+	canSelect = list()
+	for region in regions:
+		if region[0] in range(boundaries[0], boundaries[1]+1) and region[1] in range(boundaries[0], boundaries[1]+1):
+			canSelect.append(region)
+	return canSelect
+
+def selectROI(currentROI, boundaries, spectrumSize, selectNext=False):
+	if len(selectableRegions) == 0:
+		return False, None
+
+	if selectNext:
+		if currentROI == None:
+			newlySelectedROI = 0
+		else:
+			newlySelectedROI = (currentROI + 1) % len(selectableRegions)
+	else:
+		if currentROI == None or currentROI == 0:
+			newlySelectedROI = len(selectableRegions) - 1
+		else:
+			newlySelectedROI = currentROI -1
+
+	regionData = selectableRegions[newlySelectedROI]
+
+	draggedSize = ((regionData[1] - regionData[0]+1)*graphSize[0]//spectrumSize, graphSize[1])
+	draggedSurface = pygame.Surface(draggedSize)
+	draggedSurface.set_alpha(100)
+	draggedSurface.fill(paleTurquoise)
+	
+	leftside = (regionData[0] - boundaries[0])*graphSize[0]//spectrumSize
+
+	return (draggedSurface, leftside, regionData), newlySelectedROI
+
+
+
+
+graph = drawSpectrum(data, minMax).convert()
 buttonText = "Log Scale"
 linLogButton = Button(screen, limeGreen, 15, 15, 100, 50, buttonText, black)
 
 currentSpectrum = data #always preserves linear scale, so we don't lose resolution
+currentBounds = minMax
 dragging = False
+dragged = False
+unzoom = False
+selectedROI = None
+selectableRegions = regions
+
 
 #main loop
 while True:
+	screen.fill(white)
 	graphArea.fill(white)
 	for event in pygame.event.get():
+
+		#handle window close (fucking sort of)
 		if event.type == pygame.QUIT:
 			pygame.display.quit()
 			pygame.quit()
 			exit()
+
+		#handle mouse clicks
 		elif event.type == MOUSEBUTTONDOWN:
 			mousePos = pygame.mouse.get_pos()
+
+			#check for user toggling linear and log scales
 			if linLogButton.pressed(mousePos):
 				if buttonText == "Linear Scale":
-					graph = linLogToggle(True, currentSpectrum).convert()
+					graph = linLogToggle(True, currentSpectrum, currentBounds).convert()
 					buttonText = "Log Scale"
 				else:
-					graph = linLogToggle(False, currentSpectrum).convert()
+					graph = linLogToggle(False, currentSpectrum, currentBounds).convert()
 					buttonText = "Linear Scale"
-			elif inObject(mousePos, graph):
+
+			#if an area is drag selected, check if the user pushes the "Zoom" button
+			elif dragged and zoomButton.pressed(pygame.mouse.get_pos()):
+				print(currentBounds)
+				currentBounds = (currentBounds[0] + dragged[2][0], currentBounds[0] + dragged[2][1])
+				print(currentBounds)
+				currentSpectrum = currentSpectrum[dragged[2][0]:dragged[2][1]+1:]
+				dragged = False
+				selectedROI = None
+				print(selectableRegions)
+				selectableRegions = calculateSelectableRegions(currentBounds)
+				print(selectableRegions)
+				graph = drawSpectrum(currentSpectrum, currentBounds).convert()
+				unzoom = True
+				unzoomButton = Button(screen, paleBlue, screenSize[0]-240, 15, 100, 50, "Zoom Out", black)
+
+			#if spectrum is zoomed, check if the user pushes the "Zoom Out" button
+			elif unzoom and unzoomButton.pressed(pygame.mouse.get_pos()):
+				currentSpectrum = data
+				currentBounds = minMax
+				selectableRegions = regions
+				unzoom = False
+				dragged = False
+				graph = drawSpectrum(currentSpectrum, currentBounds).convert()
+				buttonText = "Log Scale"
+
+			#if the user clicks in the graph area, start a drag select
+			elif inObject(mousePos, graphArea):
+				dragged = False
+				selectedROI = None
 				draggingX, draggingY = mousePos
 				draggingX -= graphOffset[0]
 				dragging = (draggingX, draggingY)
-				print(dragging)
-		elif event.type == MOUSEBUTTONUP:
+
+		#handles when the mousebutton is released (currently only use is for ending a drag-select)
+		elif event.type == MOUSEBUTTONUP and dragging:
 			mousePos = pygame.mouse.get_pos()
-			selectBins(dragging[0], mousePos[0], currentSpectrum)
+			dragged = selectBins(dragging[0], mousePos[0] - graphOffset[0], currentSpectrum)
 			dragging = False
+			zoomButton = Button(screen, paleBlue, screenSize[0] - 120, 15, 100, 50, "Zoom", black)
+
+		#handle key presses
+		elif event.type == KEYDOWN:
+			keys = pygame.key.get_pressed()
+			if keys[K_RIGHT]:
+				dragging = False
+				dragged, selectedROI = selectROI(selectedROI, currentBounds, len(currentSpectrum), selectNext=True)
+			elif keys[K_LEFT]:
+				dragging = False
+				dragged, selectedROI = selectROI(selectedROI, currentBounds, len(currentSpectrum))
+
+			if dragged:
+				zoomButton = Button(screen, paleBlue, screenSize[0] - 120, 15, 100, 50, "Zoom", black)
 	
 	graphArea.blit(graph, (0, 0))
 
@@ -203,6 +316,12 @@ while True:
 		dragSurface.set_alpha(70)
 		dragSurface.fill(paleBlue)
 		graphArea.blit(dragSurface, (min((dragging[0], currentMouseX)), 0))
+	elif dragged:
+		graphArea.blit(dragged[0].convert(), (dragged[1], 0))
+		zoomButton.repaint(None)
+
+	if unzoom:
+		unzoomButton.repaint(None)
 			
 	linLogButton.repaint(buttonText)
 	screen.blit(graphArea, graphOffset)
