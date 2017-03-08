@@ -31,32 +31,32 @@ class ROI:
 		self.GrossArea = sum(self.containedSpectrum[3:len(self.containedSpectrum)-3:])
 		self.FWHM = self.calculateFWHM(start, end, self.containedSpectrum)
 
-	def calculateBackground(start, end, spectrum=None):
+	def calculateBackground(self, start, end, spectrum=None):
 		if spectrum == None:
 			spectrum = data[start:end+1:]
 
 		return (sum(spectrum[:3:])+sum(spectrum[len(spectrum)-4::]))*(len(spectrum)+1)/6
 
-	def calculateNetArea(start, end, spectrum=None):
+	def calculateNetArea(self, start, end, spectrum=None):
 		if spectrum == None:
 			spectrum = data[start:end+1:]
 
-		h = spectrum[len(spectrum) - 1]
-		l = spectrum[0]
-		adjustedWidth = (h - l - 5)/(h - l + 1)
+		adjustedWidth = (end - start - 5)/(end - start + 1)
 
 		adjustedGross = sum(spectrum[3:len(spectrum)-3:])
-		background = calculateBackground(start, end, spectrum)
-		netError = sqrt(adjustedGross + (background * adjustedWidth * (h-l-5)/6))
+		background = self.calculateBackground(start, end, spectrum)
+		netError = sqrt(adjustedGross + (background * adjustedWidth * (end-start-5)/6))
 
 		return adjustedGross - (background * adjustedWidth), netError
 
-	def calculateFWHM(start, end, spectrum=None):
+	def calculateFWHM(self, start, end, spectrum=None):
 		if spectrum == None:
 			spectrum = data[start:end+1:]
 
+		parity = 1 if len(spectrum)%2 == 1 else 0
+
 		maximum = max(spectrum)
-		middle = len(spectrum)//2 + len(spectrum)%2
+		middle = len(spectrum)//2 + parity - 1
 
 		leftbin, rightbin = 0, middle + 1
 		for i in range(1, middle):
@@ -96,7 +96,7 @@ roiNum = int(roi.pop(0))
 regions = list()
 for region in roi:
 	bounds = region.split(" ")
-	regions.append(int(ROI(bounds[0]), int(bounds[1])))
+	regions.append(ROI(int(bounds[0]), int(bounds[1])))
 	
 
 #start the display
@@ -169,9 +169,7 @@ class Button:
 
 class Infobox:
 	"""Displays info about a selected region"""
-	def __init__(self, x, y, bkgrndColor):
-		self.x = x
-		self.y = y
+	def __init__(self, bkgrndColor, region=None):
 		self.bkgrndColor = bkgrndColor
 		self.NetArea = 0
 		self.NetAreaError = 0
@@ -180,6 +178,62 @@ class Infobox:
 		self.BinRange = None
 		self.PeakCount = 0
 		self.MaxCount = 0
+		self.surface = None
+		self.region = region
+		if region:
+			self.setRegion(region)
+
+	def setRegion(self, reg):
+		self.region = reg
+		self.NetArea = reg.NetArea
+		self.NetAreaError = reg.NetAreaError
+		self.BinRange = (reg.start, reg.end)
+		self.GrossArea = reg.GrossArea
+		self.PeakCount = reg.containedSpectrum[len(reg.containedSpectrum)//2 + len(reg.containedSpectrum)%2 - 1]
+		self.MaxCount = max(reg.containedSpectrum)
+		self.FWHM = reg.FWHM
+		self.paint()
+
+	def clear(self):
+		self.region = None
+
+	def paint(self):
+		self.surface = pygame.Surface((screenSize[0] - 420, 50)) #dank
+		self.surface.fill(self.bkgrndColor)
+		myFont = pygame.font.SysFont("Calibri", 14)
+		binText = "Channel Range: "
+		areaText = "Net Area: "
+		grossText = "Gross Area: "
+		peakText = "Center Count: "
+		maxText = "Maximum Count: "
+		fwhmText = "FWHM: "
+		if self.region:
+			binText += "["+repr(self.BinRange[0])+", "+repr(self.BinRange[1])+"]"
+			areaText += repr(self.NetArea)+" +/-"+repr(self.NetAreaError)
+			grossText += repr(self.GrossArea)
+			peakText += repr(self.PeakCount)
+			maxText += repr(self.MaxCount)
+			fwhmText += repr(self.FWHM)
+		else:
+			binText += "N/A"
+			areaText += "N/A"
+			grossText += "N/A"
+			peakText += "N/A"
+			maxText += "N/A"
+			fwhmText += "N/A"
+		binText = myFont.render(binText, 1, black)
+		areaText = myFont.render(areaText, 1, black)
+		grossText = myFont.render(grossText, 1, black)
+		peakText = myFont.render(peakText, 1, black)
+		maxText = myFont.render(maxText, 1, black)
+		fwhmText = myFont.render(fwhmText, 1, black)
+
+		self.surface.blit(binText, (5, 5))
+		self.surface.blit(areaText, (5, 30))
+		self.surface.blit(grossText, (150, 5))
+		self.surface.blit(peakText, (245, 30))
+		self.surface.blit(maxText, (245, 5))
+		self.surface.blit(fwhmText, (345, 30))
 
 		
 
@@ -271,6 +325,7 @@ def selectROI(currentROI, boundaries, spectrumSize, selectNext=False):
 graph = drawSpectrum(data, minMax).convert()
 buttonText = "Log Scale"
 linLogButton = Button(screen, limeGreen, 15, 15, 100, 50, buttonText, black)
+infobox = Infobox(white)
 
 currentSpectrum = data #always preserves linear scale, so we don't lose resolution
 currentBounds = minMax
@@ -308,10 +363,12 @@ while True:
 
 			#if an area is drag selected, check if the user pushes the "Zoom" button
 			elif dragged and zoomButton.pressed(pygame.mouse.get_pos()):
+				buttonText = "Log Scale"
 				currentBounds = (currentBounds[0] + dragged[2][0], currentBounds[0] + dragged[2][1])
 				currentSpectrum = currentSpectrum[dragged[2][0]:dragged[2][1]+1:]
 				dragged = False
 				selectedROI = None
+				infobox.clear()
 				selectableRegions = calculateSelectableRegions(currentBounds)
 				graph = drawSpectrum(currentSpectrum, currentBounds).convert()
 				unzoom = True
@@ -322,6 +379,7 @@ while True:
 				currentSpectrum = data
 				currentBounds = minMax
 				selectableRegions = regions
+				infobox.clear()
 				unzoom = False
 				dragged = False
 				graph = drawSpectrum(currentSpectrum, currentBounds).convert()
@@ -341,6 +399,7 @@ while True:
 			dragged = selectBins(dragging[0], mousePos[0] - graphOffset[0], currentSpectrum)
 			dragging = False
 			zoomButton = Button(screen, paleBlue, screenSize[0] - 120, 15, 100, 50, "Zoom", black)
+			infobox.setRegion(ROI(currentBounds[0]+dragged[2][0], currentBounds[0]+dragged[2][1]))
 
 		#handle key presses
 		elif event.type == KEYDOWN:
@@ -348,9 +407,11 @@ while True:
 			if keys[K_RIGHT]:
 				dragging = False
 				dragged, selectedROI = selectROI(selectedROI, currentBounds, len(currentSpectrum), selectNext=True)
+				infobox.setRegion(selectableRegions[selectedROI])
 			elif keys[K_LEFT]:
 				dragging = False
 				dragged, selectedROI = selectROI(selectedROI, currentBounds, len(currentSpectrum))
+				infobox.setRegion(selectableRegions[selectedROI])
 
 			if dragged:
 				zoomButton = Button(screen, paleBlue, screenSize[0] - 120, 15, 100, 50, "Zoom", black)
@@ -372,5 +433,7 @@ while True:
 		unzoomButton.repaint(None)
 			
 	linLogButton.repaint(buttonText)
+	infobox.paint()
+	screen.blit(infobox.surface.convert(), (130, 15))
 	screen.blit(graphArea, graphOffset)
 	pygame.display.update()
