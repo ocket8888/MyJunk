@@ -2,7 +2,7 @@
 
 import argparse
 import datetime as dt
-from math import log
+from math import log, sqrt
 from sys import stdin, stdout, stderr
 
 
@@ -18,6 +18,54 @@ else:
 	infile=stdin
 
 contents = infile.read().strip().split("\n")
+
+
+class ROI:
+	"""Holds information about a region of interest"""
+	def __init__(self, start, end):
+		self.start = start
+		self.end = end
+		self.containedSpectrum = data[start:end+1:]
+		self.background = self.calculateBackground(self.start, self.end, self.containedSpectrum)
+		self.NetArea, self.NetAreaError = self.calculateNetArea(self.start, self.end, self.containedSpectrum)
+		self.GrossArea = sum(self.containedSpectrum[3:len(self.containedSpectrum)-3:])
+		self.FWHM = self.calculateFWHM(start, end, self.containedSpectrum)
+
+	def calculateBackground(start, end, spectrum=None):
+		if spectrum == None:
+			spectrum = data[start:end+1:]
+
+		return (sum(spectrum[:3:])+sum(spectrum[len(spectrum)-4::]))*(len(spectrum)+1)/6
+
+	def calculateNetArea(start, end, spectrum=None):
+		if spectrum == None:
+			spectrum = data[start:end+1:]
+
+		h = spectrum[len(spectrum) - 1]
+		l = spectrum[0]
+		adjustedWidth = (h - l - 5)/(h - l + 1)
+
+		adjustedGross = sum(spectrum[3:len(spectrum)-3:])
+		background = calculateBackground(start, end, spectrum)
+		netError = sqrt(adjustedGross + (background * adjustedWidth * (h-l-5)/6))
+
+		return adjustedGross - (background * adjustedWidth), netError
+
+	def calculateFWHM(start, end, spectrum=None):
+		if spectrum == None:
+			spectrum = data[start:end+1:]
+
+		maximum = max(spectrum)
+		middle = len(spectrum)//2 + len(spectrum)%2
+
+		leftbin, rightbin = 0, middle + 1
+		for i in range(1, middle):
+			if abs(spectrum[i] - (maximum/2)) < abs(spectrum[leftbin] - (maximum/2)):
+				leftbin = i
+			if abs(spectrum[middle+i] - (maximum/2)) < abs(spectrum[rightbin] - (maximum/2)):
+				rightbin = i
+
+		return rightbin - leftbin
 
 
 #read the data into its fields
@@ -48,7 +96,7 @@ roiNum = int(roi.pop(0))
 regions = list()
 for region in roi:
 	bounds = region.split(" ")
-	regions.append((int(bounds[0]), int(bounds[1])))
+	regions.append(int(ROI(bounds[0]), int(bounds[1])))
 	
 
 #start the display
@@ -128,6 +176,10 @@ class Infobox:
 		self.NetArea = 0
 		self.NetAreaError = 0
 		self.FWHM = 0
+		self.NetCounts = 0
+		self.BinRange = None
+		self.PeakCount = 0
+		self.MaxCount = 0
 
 		
 
@@ -146,7 +198,7 @@ def drawSpectrum(spectrum, boundaries):
 	for Bin in spectrum:
 		binColor = ( 255 - int((specMax - Bin)*(255.0/specMax)), 32, int((specMax - Bin)*(255.0/specMax)))
 		for region in regions:
-			if binNumber + boundaries[0] in range(region[0], region[1]+1):
+			if binNumber + boundaries[0] in range(region.start, region.end+1):
 				binColor = limeGreen
 				break
 		pygame.draw.rect(graphSurface, binColor, (int(binNumber*(graphSize[0]/len(spectrum))), graphSize[1]-(Bin*graphSize[1]//specMax), (graphSize[0]/len(spectrum))-1, Bin*graphSize[1]//specMax))
@@ -183,7 +235,7 @@ def selectBins(dragStart, dragEnd, spec):
 def calculateSelectableRegions(boundaries):
 	canSelect = list()
 	for region in regions:
-		if region[0] in range(boundaries[0], boundaries[1]+1) and region[1] in range(boundaries[0], boundaries[1]+1):
+		if region.start in range(boundaries[0], boundaries[1]+1) and region.end in range(boundaries[0], boundaries[1]+1):
 			canSelect.append(region)
 	return canSelect
 
@@ -204,14 +256,14 @@ def selectROI(currentROI, boundaries, spectrumSize, selectNext=False):
 
 	regionData = selectableRegions[newlySelectedROI]
 
-	draggedSize = ((regionData[1] - regionData[0]+1)*graphSize[0]//spectrumSize, graphSize[1])
+	draggedSize = ((regionData.end - regionData.start+1)*graphSize[0]//spectrumSize, graphSize[1])
 	draggedSurface = pygame.Surface(draggedSize)
 	draggedSurface.set_alpha(100)
 	draggedSurface.fill(paleTurquoise)
 	
-	leftside = (regionData[0] - boundaries[0])*graphSize[0]//spectrumSize
+	leftside = (regionData.start - boundaries[0])*graphSize[0]//spectrumSize
 
-	return (draggedSurface, leftside, regionData), newlySelectedROI
+	return (draggedSurface, leftside, (regionData.start, regionData.end)), newlySelectedROI
 
 
 
@@ -256,15 +308,11 @@ while True:
 
 			#if an area is drag selected, check if the user pushes the "Zoom" button
 			elif dragged and zoomButton.pressed(pygame.mouse.get_pos()):
-				print(currentBounds)
 				currentBounds = (currentBounds[0] + dragged[2][0], currentBounds[0] + dragged[2][1])
-				print(currentBounds)
 				currentSpectrum = currentSpectrum[dragged[2][0]:dragged[2][1]+1:]
 				dragged = False
 				selectedROI = None
-				print(selectableRegions)
 				selectableRegions = calculateSelectableRegions(currentBounds)
-				print(selectableRegions)
 				graph = drawSpectrum(currentSpectrum, currentBounds).convert()
 				unzoom = True
 				unzoomButton = Button(screen, paleBlue, screenSize[0]-240, 15, 100, 50, "Zoom Out", black)
