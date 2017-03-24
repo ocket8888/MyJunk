@@ -41,15 +41,18 @@ mathescape=true,
 language=Wolfram,
 showstringspaces=false,
 showspaces=false,
-stepnumber=1,
-numbers=left,
-numberstyle=\footnotesize,
-numbersep=9pt,
 tabsize=2,
 breaklines=true,
 showtabs=false,
 captionpos=t,
-extendedchars=true
+extendedchars=true,
+frame=l,
+framesep=4.5mm,
+framexleftmargin=2.5mm,
+fillcolor=\color{sundriedClay},
+rulecolor=\color{offGray},
+numberstyle=\normalfont\tiny\color{white},
+numbers=left
 }
 
 JS CONSOLE-LIKE STYLE
