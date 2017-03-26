@@ -10,6 +10,7 @@ from sys import stdin, stdout, stderr
 parser = argparse.ArgumentParser(description="Displays data exported in ASCII format from Maestro software.")
 
 parser.add_argument("FILE", type=str, nargs='?', default=None, help="The name of the file to read from. If not given, reads from stdin.")
+parser.add_argument("-t", dest='text', default=False, action="store_true", help="operates in text-mode, outputting some information to stdout and exiting.")
 args=parser.parse_args()
 
 if args.FILE:
@@ -97,7 +98,21 @@ regions = list()
 for region in roi:
 	bounds = region.split(" ")
 	regions.append(ROI(int(bounds[0]), int(bounds[1])))
-	
+
+if args.text:
+	print(sample_description)
+	print("Measurements taken starting at "+str(date_time)+" for "+repr(measurement_time["real"])+" s ("+repr(measurement_time["live"])+" s 'live time')")
+	print("Regions of Interest:")
+	for r in regions:
+		print("------------------------------------------")
+		print("Channels "+repr(r.start)+" to "+repr(r.end))
+		print("Net Area: "+repr(r.NetArea)+" +/- "+repr(r.NetAreaError))
+		print("GrossArea: "+repr(r.GrossArea))
+		print("FWHM: "+repr(r.FWHM))
+		print("Peak Count: "+repr(r.containedSpectrum[len(r.containedSpectrum)//2 + len(r.containedSpectrum)%2 - 1]))
+		print("Max Count: "+repr(max(r.containedSpectrum)))
+	print("------------------------------------------")
+	exit()
 
 #start the display
 import pygame
@@ -105,14 +120,16 @@ from pygame.locals import *
 if not pygame.font:
 	print("Warning, fonts disabled")
 
-screenSize = (1024, 576)
+pygame.init()
+displayInfo = pygame.display.Info()
+
+screenSize = (displayInfo.current_w, displayInfo.current_h)
 white = (255, 255, 255)
 black = (0, 0, 0)
 limeGreen = (50, 205, 50)
 paleBlue = (145, 163, 210)
 paleTurquoise = (175, 255, 222)
 
-pygame.init()
 screen = pygame.display.set_mode(screenSize)
 screen.fill(white)
 pygame.display.update()
@@ -238,7 +255,7 @@ class Infobox:
 		
 
 #define the graph's draw area
-graphSize = (900, 450)
+graphSize = (screenSize[0]-100, screenSize[1]-150)
 graphArea = pygame.Surface(graphSize)
 graphOffset = (62, 106) #left offset, top offset)
 screen.blit(graphArea, graphOffset)
