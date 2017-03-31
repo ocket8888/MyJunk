@@ -29,7 +29,7 @@ class ROI:
 		self.containedSpectrum = data[start:end+1:]
 		self.background = self.calculateBackground(self.start, self.end, self.containedSpectrum)
 		self.NetArea, self.NetAreaError = self.calculateNetArea(self.start, self.end, self.containedSpectrum)
-		self.GrossArea = sum(self.containedSpectrum[3:len(self.containedSpectrum)-3:])
+		self.GrossArea = sum(self.containedSpectrum)
 		self.FWHM = self.calculateFWHM(start, end, self.containedSpectrum)
 
 	def calculateBackground(self, start, end, spectrum=None):
@@ -124,6 +124,7 @@ pygame.init()
 displayInfo = pygame.display.Info()
 
 screenSize = (displayInfo.current_w, displayInfo.current_h)
+font_size = int(0.013*screenSize[1])
 white = (255, 255, 255)
 black = (0, 0, 0)
 limeGreen = (50, 205, 50)
@@ -151,7 +152,6 @@ class Button:
 		self.rect = pygame.Rect(x,y, width, height)
 
 	def write_text(self):
-		font_size = self.width//len(self.text)+5 #This is pretty arbitrary
 		myFont = pygame.font.SysFont("Calibri", font_size)
 		myText = myFont.render(self.text, 1, self.text_color)
 		self.buttonSurface.blit(myText, ((self.width//2) - myText.get_width()//2, (self.height//2) - myText.get_height()//2))
@@ -217,7 +217,7 @@ class Infobox:
 	def paint(self):
 		self.surface = pygame.Surface((screenSize[0] - 420, 50)) #dank
 		self.surface.fill(self.bkgrndColor)
-		myFont = pygame.font.SysFont("Calibri", 14)
+		myFont = pygame.font.SysFont("Calibri", font_size)
 		binText = "Channel Range: "
 		areaText = "Net Area: "
 		grossText = "Gross Area: "
@@ -226,7 +226,15 @@ class Infobox:
 		fwhmText = "FWHM: "
 		if self.region:
 			binText += "["+repr(self.BinRange[0])+", "+repr(self.BinRange[1])+"]"
-			areaText += repr(self.NetArea)+" +/-"+repr(self.NetAreaError)
+
+			netAreaBase = repr(self.NetArea)
+			if len(netAreaBase) > 6:
+				netAreaBase = netAreaBase[:6:]
+
+			netAreaError = repr(self.NetAreaError)
+			if len(netAreaError) > 6:
+				netAreaError = netAreaError[:6:]
+			areaText += netAreaBase+" +/-"+netAreaError
 			grossText += repr(self.GrossArea)
 			peakText += repr(self.PeakCount)
 			maxText += repr(self.MaxCount)
@@ -246,11 +254,11 @@ class Infobox:
 		fwhmText = myFont.render(fwhmText, 1, black)
 
 		self.surface.blit(binText, (5, 5))
-		self.surface.blit(areaText, (5, 30))
-		self.surface.blit(grossText, (150, 5))
-		self.surface.blit(peakText, (245, 30))
-		self.surface.blit(maxText, (245, 5))
-		self.surface.blit(fwhmText, (345, 30))
+		self.surface.blit(areaText, (5, 5+font_size))
+		self.surface.blit(grossText, (10*font_size, 5))
+		self.surface.blit(peakText, (10*font_size, 5+font_size))
+		self.surface.blit(maxText, (17*font_size, 5))
+		self.surface.blit(fwhmText, (17*font_size, 5+font_size))
 
 		
 
