@@ -123,7 +123,7 @@ if not pygame.font:
 pygame.init()
 displayInfo = pygame.display.Info()
 
-screenSize = (1920, 1080)
+screenSize = (displayInfo.current_w, displayInfo.current_h)
 font_size = int(0.013*screenSize[1])
 white = (255, 255, 255)
 black = (0, 0, 0)
