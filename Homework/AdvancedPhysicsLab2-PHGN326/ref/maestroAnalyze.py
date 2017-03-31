@@ -215,7 +215,7 @@ class Infobox:
 		self.region = None
 
 	def paint(self):
-		self.surface = pygame.Surface((screenSize[0] - 420, 50)) #dank
+		self.surface = pygame.Surface((screenSize[0] - 420, 10+2*font_size)) #dank
 		self.surface.fill(self.bkgrndColor)
 		myFont = pygame.font.SysFont("Calibri", font_size)
 		binText = "Channel Range: "
@@ -254,18 +254,18 @@ class Infobox:
 		fwhmText = myFont.render(fwhmText, 1, black)
 
 		self.surface.blit(binText, (5, 5))
-		self.surface.blit(areaText, (5, 5+font_size))
-		self.surface.blit(grossText, (10*font_size, 5))
-		self.surface.blit(peakText, (10*font_size, 5+font_size))
-		self.surface.blit(maxText, (17*font_size, 5))
-		self.surface.blit(fwhmText, (17*font_size, 5+font_size))
+		self.surface.blit(areaText, (5, 10+font_size))
+		self.surface.blit(grossText, (11*font_size+20, 5))
+		self.surface.blit(peakText, (11*font_size+20, 10+font_size))
+		self.surface.blit(maxText, (18*font_size+40, 5))
+		self.surface.blit(fwhmText, (18*font_size+40, 10+font_size))
 
 		
 
 #define the graph's draw area
-graphSize = (screenSize[0]-100, screenSize[1]-150)
+graphOffset = (50, 15+2*font_size) #(left offset, top offset)
+graphSize = (screenSize[0]-2*graphOffset[0], screenSize[1]-graphOffset[1]-40)
 graphArea = pygame.Surface(graphSize)
-graphOffset = (62, 106) #left offset, top offset)
 screen.blit(graphArea, graphOffset)
 
 #This function draws an arbitrary spectrum
@@ -364,7 +364,6 @@ selectableRegions = regions
 #main loop
 while True:
 	screen.fill(white)
-	graphArea.fill(white)
 	for event in pygame.event.get():
 
 		#handle window close (fucking sort of)
