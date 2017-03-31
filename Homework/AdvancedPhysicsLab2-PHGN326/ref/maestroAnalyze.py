@@ -264,7 +264,7 @@ class Infobox:
 
 #define the graph's draw area
 graphOffset = (50, 15+2*font_size) #(left offset, top offset)
-graphSize = (screenSize[0]-2*graphOffset[0], screenSize[1]-graphOffset[1]-40)
+graphSize = (screenSize[0]-2*graphOffset[0], screenSize[1]-graphOffset[1]-35)
 graphArea = pygame.Surface(graphSize)
 screen.blit(graphArea, graphOffset)
 
@@ -349,7 +349,7 @@ def selectROI(currentROI, boundaries, spectrumSize, selectNext=False):
 
 graph = drawSpectrum(data, minMax).convert()
 buttonText = "Log Scale"
-linLogButton = Button(screen, limeGreen, 15, 15, 100, 50, buttonText, black)
+linLogButton = Button(screen, limeGreen, 15, 5, 100, 2*font_size+10, buttonText, black)
 infobox = Infobox(white)
 
 currentSpectrum = data #always preserves linear scale, so we don't lose resolution
@@ -396,7 +396,7 @@ while True:
 				selectableRegions = calculateSelectableRegions(currentBounds)
 				graph = drawSpectrum(currentSpectrum, currentBounds).convert()
 				unzoom = True
-				unzoomButton = Button(screen, paleBlue, screenSize[0]-240, 15, 100, 50, "Zoom Out", black)
+				unzoomButton = Button(screen, paleBlue, screenSize[0]-240, 5, 100, 2*font_size+10, "Zoom Out", black)
 
 			#if spectrum is zoomed, check if the user pushes the "Zoom Out" button
 			elif unzoom and unzoomButton.pressed(pygame.mouse.get_pos()):
@@ -422,7 +422,7 @@ while True:
 			mousePos = pygame.mouse.get_pos()
 			dragged = selectBins(dragging[0], mousePos[0] - graphOffset[0], currentSpectrum)
 			dragging = False
-			zoomButton = Button(screen, paleBlue, screenSize[0] - 120, 15, 100, 50, "Zoom", black)
+			zoomButton = Button(screen, paleBlue, screenSize[0] - 120, 5, 100, 2*font_size+10, "Zoom", black)
 			infobox.setRegion(ROI(currentBounds[0]+dragged[2][0], currentBounds[0]+dragged[2][1]))
 
 		#handle key presses
@@ -438,7 +438,7 @@ while True:
 				infobox.setRegion(selectableRegions[selectedROI])
 
 			if dragged:
-				zoomButton = Button(screen, paleBlue, screenSize[0] - 120, 15, 100, 50, "Zoom", black)
+				zoomButton = Button(screen, paleBlue, screenSize[0] - 120, 5, 100, 2*font_size+10, "Zoom", black)
 	
 	graphArea.blit(graph, (0, 0))
 
@@ -458,6 +458,6 @@ while True:
 			
 	linLogButton.repaint(buttonText)
 	infobox.paint()
-	screen.blit(infobox.surface.convert(), (130, 15))
+	screen.blit(infobox.surface.convert(), (130, 0))
 	screen.blit(graphArea, graphOffset)
 	pygame.display.update()
