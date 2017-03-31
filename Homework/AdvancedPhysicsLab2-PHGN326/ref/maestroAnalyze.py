@@ -123,7 +123,7 @@ if not pygame.font:
 pygame.init()
 displayInfo = pygame.display.Info()
 
-screenSize = (displayInfo.current_w, displayInfo.current_h)
+screenSize = (1920, 1080)
 font_size = int(0.013*screenSize[1])
 white = (255, 255, 255)
 black = (0, 0, 0)
@@ -264,7 +264,7 @@ class Infobox:
 
 #define the graph's draw area
 graphOffset = (50, 15+2*font_size) #(left offset, top offset)
-graphSize = (screenSize[0]-2*graphOffset[0], screenSize[1]-graphOffset[1]-35)
+graphSize = (screenSize[0]-2*graphOffset[0], int(screenSize[1]*(1-1/50))-graphOffset[1])
 graphArea = pygame.Surface(graphSize)
 screen.blit(graphArea, graphOffset)
 
