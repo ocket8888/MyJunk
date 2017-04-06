@@ -10,6 +10,7 @@ from sys import stdin, stdout, stderr
 parser = argparse.ArgumentParser(description="Displays data exported in ASCII format from Maestro software.")
 
 parser.add_argument("FILE", type=str, nargs='?', default=None, help="The name of the file to read from. If not given, reads from stdin.")
+parser.add_argument("-t", dest='text', default=False, action="store_true", help="operates in text-mode, outputting some information to stdout and exiting.")
 args=parser.parse_args()
 
 if args.FILE:
@@ -28,7 +29,7 @@ class ROI:
 		self.containedSpectrum = data[start:end+1:]
 		self.background = self.calculateBackground(self.start, self.end, self.containedSpectrum)
 		self.NetArea, self.NetAreaError = self.calculateNetArea(self.start, self.end, self.containedSpectrum)
-		self.GrossArea = sum(self.containedSpectrum[3:len(self.containedSpectrum)-3:])
+		self.GrossArea = sum(self.containedSpectrum)
 		self.FWHM = self.calculateFWHM(start, end, self.containedSpectrum)
 
 	def calculateBackground(self, start, end, spectrum=None):
@@ -97,7 +98,21 @@ regions = list()
 for region in roi:
 	bounds = region.split(" ")
 	regions.append(ROI(int(bounds[0]), int(bounds[1])))
-	
+
+if args.text:
+	print(sample_description)
+	print("Measurements taken starting at "+str(date_time)+" for "+repr(measurement_time["real"])+" s ("+repr(measurement_time["live"])+" s 'live time')")
+	print("Regions of Interest:")
+	for r in regions:
+		print("------------------------------------------")
+		print("Channels "+repr(r.start)+" to "+repr(r.end))
+		print("Net Area: "+repr(r.NetArea)+" +/- "+repr(r.NetAreaError))
+		print("GrossArea: "+repr(r.GrossArea))
+		print("FWHM: "+repr(r.FWHM))
+		print("Peak Count: "+repr(r.containedSpectrum[len(r.containedSpectrum)//2 + len(r.containedSpectrum)%2 - 1]))
+		print("Max Count: "+repr(max(r.containedSpectrum)))
+	print("------------------------------------------")
+	exit()
 
 #start the display
 import pygame
@@ -105,14 +120,17 @@ from pygame.locals import *
 if not pygame.font:
 	print("Warning, fonts disabled")
 
-screenSize = (1024, 576)
+pygame.init()
+displayInfo = pygame.display.Info()
+
+screenSize = (displayInfo.current_w, displayInfo.current_h)
+font_size = int(0.013*screenSize[1])
 white = (255, 255, 255)
 black = (0, 0, 0)
 limeGreen = (50, 205, 50)
 paleBlue = (145, 163, 210)
 paleTurquoise = (175, 255, 222)
 
-pygame.init()
 screen = pygame.display.set_mode(screenSize)
 screen.fill(white)
 pygame.display.update()
@@ -134,7 +152,6 @@ class Button:
 		self.rect = pygame.Rect(x,y, width, height)
 
 	def write_text(self):
-		font_size = self.width//len(self.text)+5 #This is pretty arbitrary
 		myFont = pygame.font.SysFont("Calibri", font_size)
 		myText = myFont.render(self.text, 1, self.text_color)
 		self.buttonSurface.blit(myText, ((self.width//2) - myText.get_width()//2, (self.height//2) - myText.get_height()//2))
@@ -198,9 +215,9 @@ class Infobox:
 		self.region = None
 
 	def paint(self):
-		self.surface = pygame.Surface((screenSize[0] - 420, 50)) #dank
+		self.surface = pygame.Surface((screenSize[0] - 420, 10+2*font_size)) #dank
 		self.surface.fill(self.bkgrndColor)
-		myFont = pygame.font.SysFont("Calibri", 14)
+		myFont = pygame.font.SysFont("Calibri", font_size)
 		binText = "Channel Range: "
 		areaText = "Net Area: "
 		grossText = "Gross Area: "
@@ -209,7 +226,15 @@ class Infobox:
 		fwhmText = "FWHM: "
 		if self.region:
 			binText += "["+repr(self.BinRange[0])+", "+repr(self.BinRange[1])+"]"
-			areaText += repr(self.NetArea)+" +/-"+repr(self.NetAreaError)
+
+			netAreaBase = repr(self.NetArea)
+			if len(netAreaBase) > 6:
+				netAreaBase = netAreaBase[:6:]
+
+			netAreaError = repr(self.NetAreaError)
+			if len(netAreaError) > 6:
+				netAreaError = netAreaError[:6:]
+			areaText += netAreaBase+" +/-"+netAreaError
 			grossText += repr(self.GrossArea)
 			peakText += repr(self.PeakCount)
 			maxText += repr(self.MaxCount)
@@ -229,18 +254,18 @@ class Infobox:
 		fwhmText = myFont.render(fwhmText, 1, black)
 
 		self.surface.blit(binText, (5, 5))
-		self.surface.blit(areaText, (5, 30))
-		self.surface.blit(grossText, (150, 5))
-		self.surface.blit(peakText, (245, 30))
-		self.surface.blit(maxText, (245, 5))
-		self.surface.blit(fwhmText, (345, 30))
+		self.surface.blit(areaText, (5, 10+font_size))
+		self.surface.blit(grossText, (11*font_size+20, 5))
+		self.surface.blit(peakText, (11*font_size+20, 10+font_size))
+		self.surface.blit(maxText, (18*font_size+40, 5))
+		self.surface.blit(fwhmText, (18*font_size+40, 10+font_size))
 
 		
 
 #define the graph's draw area
-graphSize = (900, 450)
+graphOffset = (50, 15+2*font_size) #(left offset, top offset)
+graphSize = (screenSize[0]-2*graphOffset[0], int(screenSize[1]*(1-1/50))-graphOffset[1])
 graphArea = pygame.Surface(graphSize)
-graphOffset = (62, 106) #left offset, top offset)
 screen.blit(graphArea, graphOffset)
 
 #This function draws an arbitrary spectrum
@@ -324,7 +349,7 @@ def selectROI(currentROI, boundaries, spectrumSize, selectNext=False):
 
 graph = drawSpectrum(data, minMax).convert()
 buttonText = "Log Scale"
-linLogButton = Button(screen, limeGreen, 15, 15, 100, 50, buttonText, black)
+linLogButton = Button(screen, limeGreen, 15, 5, 100, 2*font_size+10, buttonText, black)
 infobox = Infobox(white)
 
 currentSpectrum = data #always preserves linear scale, so we don't lose resolution
@@ -339,7 +364,6 @@ selectableRegions = regions
 #main loop
 while True:
 	screen.fill(white)
-	graphArea.fill(white)
 	for event in pygame.event.get():
 
 		#handle window close (fucking sort of)
@@ -372,7 +396,7 @@ while True:
 				selectableRegions = calculateSelectableRegions(currentBounds)
 				graph = drawSpectrum(currentSpectrum, currentBounds).convert()
 				unzoom = True
-				unzoomButton = Button(screen, paleBlue, screenSize[0]-240, 15, 100, 50, "Zoom Out", black)
+				unzoomButton = Button(screen, paleBlue, screenSize[0]-240, 5, 100, 2*font_size+10, "Zoom Out", black)
 
 			#if spectrum is zoomed, check if the user pushes the "Zoom Out" button
 			elif unzoom and unzoomButton.pressed(pygame.mouse.get_pos()):
@@ -398,7 +422,7 @@ while True:
 			mousePos = pygame.mouse.get_pos()
 			dragged = selectBins(dragging[0], mousePos[0] - graphOffset[0], currentSpectrum)
 			dragging = False
-			zoomButton = Button(screen, paleBlue, screenSize[0] - 120, 15, 100, 50, "Zoom", black)
+			zoomButton = Button(screen, paleBlue, screenSize[0] - 120, 5, 100, 2*font_size+10, "Zoom", black)
 			infobox.setRegion(ROI(currentBounds[0]+dragged[2][0], currentBounds[0]+dragged[2][1]))
 
 		#handle key presses
@@ -414,7 +438,7 @@ while True:
 				infobox.setRegion(selectableRegions[selectedROI])
 
 			if dragged:
-				zoomButton = Button(screen, paleBlue, screenSize[0] - 120, 15, 100, 50, "Zoom", black)
+				zoomButton = Button(screen, paleBlue, screenSize[0] - 120, 5, 100, 2*font_size+10, "Zoom", black)
 	
 	graphArea.blit(graph, (0, 0))
 
@@ -434,6 +458,6 @@ while True:
 			
 	linLogButton.repaint(buttonText)
 	infobox.paint()
-	screen.blit(infobox.surface.convert(), (130, 15))
+	screen.blit(infobox.surface.convert(), (130, 0))
 	screen.blit(graphArea, graphOffset)
 	pygame.display.update()
