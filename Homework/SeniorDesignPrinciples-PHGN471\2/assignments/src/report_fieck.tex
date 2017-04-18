@@ -93,7 +93,7 @@ Right: A Rectangular SPIFI Mask\label{fig:ex-grat}}
 \end{figure}
 
 Examples of typical SPIFI masks are
-shown in Figure \ref{fig:ex-grat}. For the common circular grating - 
+shown in Figure \ref{fig:ex-grat}. For the common circular mask - 
 similar to the one in the figure - the form of the pattern in polar
 coordinates is
 \begin{equation}
@@ -147,137 +147,46 @@ thereby eliminating the need to mechanically scan the laser along the object. 2D
 Figure \ref{fig:sim-in-out} shows the input and output of the simulation when run using an image file as a representation of the object.
 
 \section*{Photon Counting}
-Previously, SPIFI measurements were taken using National Instruments$^\textnormal{\small TM}$ (NI) devices and passed through NI's proprietary LabView software for analysis. With the improved scanning speed expected from implementations of 2D-SPIFI, it will be necessary to increase processing of collected data as well. If one were able to count the photons incident on the detector, it would eliminate the need to perform Fourier transforms on the input. The energy of the photon will show up in the detection method  and therefore automatically carry the information about its frequency; e.g. photo-multiplier tubes produce current proportional to detected photon energy. So the mapping information is there and the image can begin being constructed immediately, each detected photon can be immediately added to a real-time image without the need for further computation. The computation is simple enough to be carried out efficiently by a micro-controller, so a program was devised for a Field-Programmable Gate Array (FPGA) as a first step in moving towards a headless data store. The design is fairly simple, it works by taking only two signals as inputs on the general-purpose I/O pins on the DEO-Nano FPGA. One is a reading of the laser control itself, which tells the FPGA when the laser fires a burst of photons, so that it can count them for that time period. The other input comes from the photo-multiplier tube that served as the detector. Then all the FPGA does is print a list of photons it counts during each laser pulse back through a usb cable to a normal computer. Figure \ref{fig:timing} shows an example of these signals, with the counting periods indicated.
+Previously, SPIFI measurements were taken using National Instruments$^\textnormal{\small TM}$ (NI) devices and passed through NI's proprietary LabView software for analysis. With the improved scanning speed expected from implementations of 2D-SPIFI, it will be necessary to increase processing of collected data as well. If one were able to count the photons incident on the detector, it would eliminate the need to perform Fourier transforms on the input. The energy of the photon will show up in the detection method  and therefore automatically carry the information about its frequency; e.g. photo-multiplier tubes produce current proportional to detected photon energy. So the mapping information is there and the image can begin being constructed immediately, each detected photon can be immediately added to a real-time image without the need for further computation. As a first step, attempts were made to connect a GPIB device - already owned by the lab and capable counting photons - to a desktop computer. However, it was determined that too much time would be spent getting the usb CPIB board to interface properly with a modern computer which could otherwise be spent on a more stable framework. The computation is simple enough to be carried out efficiently by a micro-controller, so a program was devised by the teamfor a Field-Programmable Gate Array (FPGA) as a first step in moving towards a headless data store. The design is fairly simple, it works by taking only two signals as inputs on the general-purpose I/O pins on the DEO-Nano FPGA. One is a reading of the laser control itself, which tells the FPGA when the laser fires a burst of photons, so that it can count them for that time period. The other input comes from the photo-multiplier tube that served as the detector. Then all the FPGA does is print a list of photons it counts during each laser pulse back through a usb cable to a normal computer. Figure \ref{fig:timing} shows an example of these signals, with the counting periods indicated.
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.7\textwidth]{timing}
+	\includegraphics[width=0.7\textwidth]{sample-timing-diagram}
 	\caption{Sample FPGA Input Timing Diagram}
 	\label{fig:timing}
 \end{figure}
+
+\section*{Results}
+
 
 
 \section*{Software and Licensing}
 Unfortunately, the source code cannot be included here, as the research is still pending publication. At the time of publication, the source will be made available to the community along with its respective documentation.
 Once released, the software is provided under the GNU Public License version 3. The simulation is written in the open Python 3.5.2 standard, with a list of free and open source dependencies that will be made available at the same time as the simulation itself. The FPGA code was written using the Quartus software which is the property of Altera$^\textnormal{\small TM}$, along with various pieces of supporting software each of which is subject to its own license. 
 
-
-Firstly, the simulation will be built up in the following steps:
-\begin{enumerate}
-\item Simulate 2D SPIFI using a perfectly continuous grating wheel
-\item Incorporate gaps between patterns on the wheel
-\item Incorporate refraction and diffraction caused by equipment
-\end{enumerate}
-Documentation for this program will be made available in exhaustive pdf 
-form as well as POSIX-compliant manual pages for the first incarnation, and
-subsequently updated for each change. The program will be written in an
-open language standard (C) using a free and open runtime for that 
-language (the GNU Standard C library, compiled using the GNU C Compiler),
-and will be written and run on existing computers.
-
-Secondly, data collection software will be written in the following two
-steps:
-\begin{enumerate}
-\item Analysis of existing codebase
-\item Development of actual software
-\end{enumerate}
-Data collection software already exists for simple, 1-dimensional SPIFI
-systems, so it may be advantageous to build the 2-dimensional analysis tool
-by writing a new version of this suite, or even to simply add it directly
-into the existing structure. Alternatively, if the current software is
-found to be devoid of functionality that can be used for the new system, or
-if it is deemed too bloated, slow, or incapable of interfacing properly
-with the detection hardware in some way, it would be more prudent to begin
-a new program and build it from the ground up. To determine which is
-better, the existing code will be analyzed, ideally in
-collaboration with the original team that wrote it - a coalition of
-researchers and research assistants from the Colorado School of Mines and
-the University of Colorado in Fort Collins, with the latter currently in
-charge of maintaining and updating. After the analysis, the actual code
-will have to be written. Whatever decision is reached regarding the use of
-the 1-dimensional analysis software, the final product \emph{will} be
-written in an open language standard, and utilize a free and open
-runtime (the existing software has equivalent versions written in
-C++ and C\#, so it's impossible to say exactly what language and runtime
-will be used until the analysis is conducted, or even which will be used
-given that the existing software is used in some capacity). However, the
-current software is packaged as "Solutions" for the Microsoft IDE and
-Development Environment called Visual Studio. Therefore, even if neither of
-these codebases is used, Visual Studio must be used in their analysis. Not
-only is Visual Studio itself not free, it only runs on the proprietary
-operating system Windows version 7 or higher. Furthermore, the company Jet
-Brains produces a proprietary plugin for Visual Studio that makes working
-with C\# so much easier, and consequentially saves developers so much time
-that the vast majority of companies that work with C\# deem it worth the
-cost. Given this usefulness, and the fact that the head software engineer is already
-familiar with the plugin, it would be very difficult to complete the
-analysis of the existing data collection software inside of the estimated
-timeframe - certainly not with the 10 h/week estimate - without the use
-of the plugin.
-
-\section*{Statement of Work}
-A breakdown of the costs of completing each part of the project
-is given in Table \ref{tbl:cost}, and
-a timeline given for these tasks and their various parts, as well as the
-report to be presented on completion is given in Table \ref{tbl:time} and
-the data is visualized in Chart \ref{chrt:time}.
-
+\section*{Cost Analysis}
+A breakdown of the costs of each of the projects necessary materials is shown in \ref{tbl:cost}.
 \begin{table}[h]
 \centering
 \begin{tabular}{l|r|c|c|r}
 \bf{Item} & \bf{Unit Cost} & \bf{Quantity} & \bf{Unit} & \bf{Cost}\\
 \hline
-2D Simulation Software & & & & \\
-\tab$\cdot$ Labor & \$63.00 & 28 & day & \$1764.00\\
+Solid State Drive 				& \$95.00 	& 1 & ea 	& \$95.00\\
+DEO-Nano FPGA 					& \$86.25 	& 1 & ea 	& \$86.25\\
+GPIB-USB Cable					& \$395.00	& 1 & ea 	& \$395.00\\
+Mathematica Software License			& \$150.00	& 2 & ea 	& \$300.00\\
+\tab$\cdot$Mathematica Subscription Renewal	& \$50.00	& 4 & semester	& \$200.00\\
 \hline
-Data Collection Suite & & & & \$6401.00\\
-\tab$\cdot$ Labor & \$63.00 & 87 & day & \$5481.00\\
-\tab$\cdot$ Visual Studio License & \$500.00 & 1 & ea & \$500.00\\
-\tab$\cdot$ Windows 10 Product License & \$120.00 & 1 & ea & \$120.00\\
-\tab$\cdot$ JetBrains Resharper License & \$300.00 & 1 & ea & \$300.00\\
+Labor 						& \$44.00 	&155& hour	& \$6820.00\\
+Overhead	 				& 50\% of Labor	& --& -- 	& \$3410.00\\
 \hline
-Final Report & & & & \\
-\tab$\cdot$ Labor & \$63.00 & 36 & day & \$2268.00\\
-\hline
-\tab$\cdot$ Overhead & 50\% of Labor & -- & -- & \$4756.50\\
-\hline
-\bf{Total Cost} & & & & \bf{\$15,189.00}
+\bf{Total Cost} & & & & \bf{\$11,306.25}
 \end{tabular}
-\caption{Cost Estimates for Project Deliverables\label{tbl:cost}}
+\caption{Cost Breakdown for Project Materials\label{tbl:cost}}
 \end{table}
 
-\begin{table}[h]
-\centering
-\begin{tabular}{l|c|r|c}
-\bf{Deliverable} & \bf{Start Date} & \bf{Duration (Days)} & \bf{End Date}\\
-\hline
-Ideal, Continuous 2D Simulation & 1/10/17 & 7 & 1/16/17\\
-Initial Simulator Documentation& 1/13/17 & 4 & 1/16/17\\
-Ideal 2D Simulator & 1/17/17 & 7 & 1/23/16\\
-Ideal Simulator Documentation & 1/20/17 & 4 & 1/23/17\\
-Final Simulator & 1/24/17 & 14 & 2/6/17\\
-Final Simulator Documentation & 2/3/17 & 4 & 2/6/17\\
-1D Data Collection Software Analysis & 2/7/17 & 11 & 2/17/17\\
-2D Data Collection Software & 2/18/17 & 87 & 5/15/17\\
-Data Collection Documentation & 5/2/17 & 14 & 5/15/17\\
-Final Report & 4/10/17 & 36 & 5/15/17
-\end{tabular}
-\caption{Timeline Breakdown\label{tbl:time}}
-\end{table}
+The solid state drive is connected to the computer that both manages the FPGA and communicates with the GPIB cable. The GPIB cable was used as a preliminary step in photon counting, using equipment that would perform photon counting with little to no coaxing, but was too archaic to interface with a computer on one of today's hardware standards. Fortunately, the cost of the solid state drive was salvaged as the computer it's connected to now serves as the human interface with the FPGA system. The GPIB-USB cable itself will be repurposed for other projects. Mathematica licenses were required for both a senior member of the research team, and for our team's lead software developer so that he could work with the Mathematica files created by the more senior member. Mathematica has a 1-time payment as well as a regularly-recurring subscription fee, which is proveded on a per-semester basis for students.
 
-\begin{figure}[H]
-\hspace{-40pt}
-\includegraphics[width=1.2\textwidth]{timeline}
-\caption{Project Timeline\label{chrt:time}}
-\end{figure}
-
-Labor cost estimates are
-based on a rough \$44.00/hr starting pay for software engineers,
-equivalent to \$440.00 per 7 days or about \$63.00/day, assuming I spend
-10 hours week (standard part-time employment hours/week) working on these
-tasks.
-
-In short, the team requests \$15,189.50 to complete this project.
 \section*{Conclusion}
 The ability to reliably simulate 2D SPIFI systems is crucial to the ability
 of the other teams working on the broader project to ensure the diffraction
