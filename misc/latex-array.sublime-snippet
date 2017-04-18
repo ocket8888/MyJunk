@@ -1,0 +1,13 @@
+<snippet>
+	<content><![CDATA[
+\begin{${1:array}}${2:{$3}}
+	$4
+\end{$1}
+$0
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>\beg</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>text.tex.latex meta.environment.math.block.dollar.latex</scope>
+	<description>Inserts environment in block math mode (assumes array)</description>
+</snippet>

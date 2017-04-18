@@ -135,6 +135,18 @@ One focus of this project was to expand the capabilities of SPIFI by using a
 mask which diffracts the entire beam in two dimensions at any one time,
 thereby eliminating the need to mechanically scan the laser along the object. 2D-SPIFI can scan an object in constant, or $O[1]$ time, as opposed to the current technique which has a complexity of $O[n]$ where $n$ is the size of the object - and again all of this is compared to $O[n^2]$ when using traditional raster-scan techniques. This technology is still in its infancy, but if it proves reliable wil obviously vastly improve real-time imaging. As a proof-of-concept, as well as to aid in the design of 2D SPIFI masks, the team produced software capable of simulating 2D-SPIFI for more or less arbitrary objects and masks.
 
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.45\textwidth]{testimg}
+	\hfill
+	\includegraphics[width=0.45\textwidth]{testoutput}
+	\caption{Left: Simulation Input "Object" - Right: Simulation Output Image}
+	\label{fig:sim-in-out}
+\end{figure}
+
+Figure \ref{fig:sim-in-out}
+
+
 \section*{Procedure}
 Our team is tasked with developing simulations of 2-dimensional SPIFI
 systems, and with writing data collection software. Each task will occur

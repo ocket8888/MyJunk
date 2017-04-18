@@ -1,0 +1,16 @@
+<snippet>
+	<content><![CDATA[
+\begin\{figure\}${1:[ht]}
+	${2:\centering}
+	\includegraphics[width=${3:0.7\textwidth}]{${4:picture-name.png}}
+	${5:\caption{${6:A brief description}}}
+	${7:\label\{fig:${8:lbl}\}}
+\end{figure}
+$0
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>\fig</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>text.tex.latex</scope>
+	<description>Inserts a floating figure environment at the current indentation level (1 figure; requires graphicsx package; Tabthrough to continue writing.)</description>
+</snippet>

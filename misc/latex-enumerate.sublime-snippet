@@ -1,0 +1,12 @@
+<snippet>
+	<content><![CDATA[
+\begin{enumerate}
+	\item $1
+\end{enumerate}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>\enum</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>text.tex.latex</scope>
+	<description>Inserts an enumeration environment</description>
+</snippet>
