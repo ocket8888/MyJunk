@@ -6,6 +6,7 @@
 \usepackage{xcolor}
 %Insert tab
 \providecommand{\tab}{\hspace{10pt}}
+\bibliographystyle{ieeetr}
 \title{SPIFI Improvements Report}
 \author{Brennan W. Fieck}
 \begin{document}
@@ -43,7 +44,7 @@ using a camera). Figure \ref{fig:cube-line} depicts part of a very simple SPIFI 
 	\label{fig:cube-line}
 \end{figure}
 
-The four $\omega$s in boxes represent different, unique frequencies along the plane of light hitting the object. Of course, in practice the frequency modulation is smoother and the resolution of the imaging is determined by how many "boxes" one can make on the face of the object. The sheet of light is mechanically swept across the object, and as it moves the frequencies each evolve at different rates. Figure \ref{fig:cube-sheet} shows how frequency varies in time as the sheet of light sweeps over the object.
+The four $\omega$s in boxes represent different, unique frequencies along the plane of light hitting the object. Of course, in practice the frequency modulation is smoother and the resolution of the imaging is determined by how many "boxes" one can make on the face of the object. The sheet of light is mechanically swept across the object, and as it moves the frequencies each evolve in a consistently unique manner. Figure \ref{fig:cube-sheet} shows how frequency varies in time as the sheet of light sweeps over the object.
 
 \begin{figure}[ht]
 	\centering
@@ -70,14 +71,14 @@ $x/y$ plane that bounds it. After passing through the object, the light is gathe
 % \caption{A Simple SPIFI System Setup\label{fig:spifi-sys}}
 % \end{figure}
 
-This frequency mapping is achieved by spreading the laser into a sheet and then passing it through a SPIFI mask. Designs of these masks vary, but they can all be understood in the same manner through their transfer function acting on the laser. Figure \ref{fig:spifi-sys} shows the signal transfer system, starting with some laser given by $u(x)$. The modulation function shown, $m(x,t)$, is then applied, followed by the laser passing through the object which itself applies some unkown transfer function $g(x)$. The final result measured on the detector is an intensity, so only the square of the signal is observable.
-
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.75\textwidth]{spifi-system-graphical}
-\caption{A Simple SPIFI System}
-\label{fig:spif-sys}
+\caption{A Simple SPIFI System\label{fig:spifi-sys}}
 \end{figure}
+
+This frequency mapping is achieved by spreading the laser into a sheet and then passing it through a SPIFI mask. Designs of these masks vary, but they can all be understood in the same manner through their transfer function acting on the laser. Figure
+\ref{fig:spifi-sys} shows the signal transfer system, starting with some laser given by $u(x)$. The modulation function shown, $m(x,t)$, is then applied, followed by the laser passing through the object which itself applies some unkown transfer function $g(x)$. The final result measured on the detector is an intensity, so only the square of the signal is observable.
 The transfer function $g[x,y]$ is determined
 by the object being
 imaged, and represents an attenuation of amplitude of specific sections of the
@@ -102,7 +103,7 @@ f_mk_prt\right].
 \label{eq:pattern}
 \end{equation}
 
-Here, $f_m$ is the rotational of the grating, and $k_p$ is a constant
+Here, $f_m$ is the rotational of the mask, and $k_p$ is a constant
 that has to do with the density of the lines in the pattern.
 
 \begin{figure}[H]
@@ -113,7 +114,7 @@ that has to do with the density of the lines in the pattern.
 \end{figure}
 
 As shown in Figure \ref{fig:circ-sys}, this function modulates the laser as it passes
-through the grating as a line, and then is scanned along the object from top
+through the mask as a line, and then is scanned along the object from top
 to bottom by a mechanical apparatus twisting a lens or mirror. A transformation from Equation
 \ref{eq:pattern} to the $m[x,y,t]$ transfer function requires sampling the
 output in intervals of $\tau_m=1/f_m$, the period of the pattern's 
@@ -132,7 +133,7 @@ unknown object looks like Figure \ref{fig:fourier}.
 
 \section*{Theory of 2D SPIFI}
 One focus of this project was to expand the capabilities of SPIFI by using a
-mask which diffracts the entire beam in two dimensions at any one time,
+mask which modulates the entire beam in two dimensions at any one time,
 thereby eliminating the need to mechanically scan the laser along the object. 2D-SPIFI can scan an object in constant, or $O[1]$ time, as opposed to the current technique which has a complexity of $O[n]$ where $n$ is the size of the object - and again all of this is compared to $O[n^2]$ when using traditional raster-scan techniques. This technology is still in its infancy, but if it proves reliable wil obviously vastly improve real-time imaging. As a proof-of-concept, as well as to aid in the design of 2D SPIFI masks, the team produced software capable of simulating 2D-SPIFI for more or less arbitrary objects and masks.
 
 \begin{figure}[ht]
@@ -157,7 +158,7 @@ Previously, SPIFI measurements were taken using National Instruments$^\textnorma
 \end{figure}
 
 \section*{Results}
-
+The simulation software is polished and versatile, able to take input in the form of an image, file, or UNIX pipeline and providing output in both text and graphical form of incident electric field, incident intensity and frequency decomposition, and even an animation in real time. All of these functions will be instrumental in helping the research team design 2D-SPIFI masks, and comparing their performance to a theoretical model. It is also set up in such a way that if the need should arise, the software can double as an analysis tool for real data. The photon counting program on the FPGA works flawlessly with input from a function generator, and will enter testing later this week. The developer will be available for support in the coming months, and there should be a smooth transition with any bugs quickly taken care of.
 
 
 \section*{Software and Licensing}
@@ -195,17 +196,14 @@ the theory, and are operating properly when placed into the system.
 Furthermore, the entire point of performing SPIFI microscopy on an object
 is to collect the output signal data, making the production of data
 collection software imperative to the success of the project. The team
-feels that costs have been estimated accurately, and that said costs are
+feels that costs of this endeavor are
 well worth the advances to science this technology will bring.
 
-Upon the project's completion, each of these software suites and their
+Upon the technology's publication, each of these software suites and their
 corresponding source code will be made publicly available via a public
-source control repository hosted by \href{http://www.gitlab.com}{GitLab}.
-Specifically, both will be initiated as private repositories, but will be
-made public upon publication of the larger body of work this team is
-contributed to. As such, though links are provided in the Appendix,
+source control repository hosted by \href{http://www.gitlab.com}{GitLab}. Though links are provided in the Appendix,
 following them will be useless to anyone without access to the
-repositories, and will remain empty for a little while anyway. To request
+repositories, and will remain so for a little while. It's difficult to say with such things, but the research team expects to be ready to submit an article for peer review by summer's end. To request
 access to these repositories, contact the project lead and/or head
 software engineer. All links and contact information is available in
 Appendix \ref{app:misc}.
@@ -222,8 +220,8 @@ Appendix \ref{app:misc}.
 \end{itemize}
 \subsection{Links}
 \begin{itemize}
-\item \href{https://gitlab.com/PiercingGaze/2DSimulator}{2D SPIFI Grating Simulation Software}
-\item \href{https://gitlab.com/PiercingGaze/SPIFIDataCollectionSoftware}{Data Collection Suite}
+\item \href{https://gitlab.com/PiercingGaze/2DSimulator}{2D SPIFI Mask Simulation Software (unreleased as of the time of this writing)}
+\item \href{https://gitlab.com/PiercingGaze/SPIFIDataCollectionSoftware}{Data Collection Suite (unreleased as of the time of this writing)}
 \item \href{https://www.researchgate.net/profile/Alyssa_Allende_Motz/publication/281058706_Super-resolved_multimodal_multiphoton_microscopy_with_spatial_frequency-modulated_imaging/links/5790535d08ae64311c0c7dbb.pdf?origin=publication_detail&ev=pub_int_prw_xdl&msrp=c3fj9RD45iTpvk8bRBlzYkN6ndcAYlW9SDWsP0gVb8WzFV5pplCJ3WT6D9fQrP2OT3rGfRWxpWECBz07rTxtH3ZWQ-V2CIIn99KlfPF-otY.9HgCklW2b18-KeSg_Y6vX11zOug1uQ3SSCEpbGXSzk5y_fIuZAdBHJtjk82L1NpfpV2e2Cvcd6QBkqBT24bFzQ.uEqPWNYXdN8Ge_jgkDmRdTlNB8rMwiFPPFdueuZQ9VY6c_KOsp-YvgMVBaNkL6Ldag5ifDVuL2YqcNGnICTcHA}{Original SPIFI Article} - hosted by
 \href{https://www.researchgate.net}{Research Gate}
 \end{itemize}
