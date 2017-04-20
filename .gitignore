@@ -2,9 +2,9 @@
 *.aux
 *.log
 *.swp
-*.aux,
-*.nav,
-*.toc,
-*.out,
-*.log,
+*.aux
+*.nav
+*.toc
+*.out
+*.log
 *.snm
