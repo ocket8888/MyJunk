@@ -1,0 +1,16 @@
+{
+	"cmd": ["pdflatex", "-interaction=nonstopmode", "$file"],
+	"selector": "text.tex.latex text.tex.latex punctuation.definition.group.brace.end.latex",
+	"syntax": "LaTeX Log",
+
+	"variants":[
+		{
+			"name":"Run",
+			"cmd":["make","-j"]
+		},
+		{
+			"name":"Clean",
+			"cmd":["rm", "-rf", "./*.aux", "./*.nav", "./*.toc", "./*.out", "./*.log", "./*.snm"]
+		}
+	]
+}
