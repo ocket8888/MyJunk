@@ -19,7 +19,7 @@
 			"file": "beamercolorthemeufrn.sty",
 			"settings":
 			{
-				"buffer_size": 1567,
+				"buffer_size": 1568,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -28,7 +28,7 @@
 			"file": "presentation.tex",
 			"settings":
 			{
-				"buffer_size": 303,
+				"buffer_size": 987,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -109,17 +109,21 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 252.0,
-		"last_filter": "",
+		"height": 136.0,
+		"last_filter": "Build With: ",
 		"selected_items":
 		[
 			[
-				"late",
-				"Set Syntax: LaTeX"
+				"Build With: ",
+				"Build With: LaTeX - Clean"
 			],
 			[
 				"vm",
 				"View: Toggle Menu"
+			],
+			[
+				"late",
+				"Set Syntax: LaTeX"
 			],
 			[
 				"insta",
@@ -154,7 +158,7 @@
 				"Preferences: Settings – Syntax Specific"
 			]
 		],
-		"width": 1393.0
+		"width": 1394.0
 	},
 	"console":
 	{
@@ -294,7 +298,7 @@
 			]
 		},
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -303,20 +307,20 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1567,
+						"buffer_size": 1568,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								807,
-								807
+								1452,
+								1452
 							]
 						],
 						"settings":
 						{
-							"function_name_status_row": 20,
+							"function_name_status_row": 39,
 							"git_gutter_enabled": true,
 							"syntax": "Packages/LaTeX/TeX.sublime-syntax",
 							"translate_tabs_to_spaces": false
@@ -325,7 +329,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -334,20 +338,20 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 303,
+						"buffer_size": 987,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								94,
-								94
+								940,
+								940
 							]
 						],
 						"settings":
 						{
-							"function_name_status_row": 4,
+							"function_name_status_row": 40,
 							"git_gutter_enabled": true,
 							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax"
 						},
@@ -355,7 +359,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -398,10 +402,10 @@
 			1.0
 		]
 	},
-	"menu_visible": true,
+	"menu_visible": false,
 	"output.exec":
 	{
-		"height": 198.0
+		"height": 933.0
 	},
 	"output.find_results":
 	{
