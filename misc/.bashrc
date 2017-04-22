@@ -50,7 +50,7 @@ alias buildapi='pushd $FDTN && msbuild API.sln && popd'
 alias runapi='cygstart $DISPSERV && cygstart $SECSERV && cygstart $EXPRSERV'
 alias api='buildapi && runapi'
 alias dispatch='cygstart $DISPSERV'
-alias gulp='C:/Incode10/PublicApi/ExpressWeb/node_modules/gulp/bin/gulp.js --max_old_space_size=1500'
+alias gulp='time C:/Incode10/PublicApi/ExpressWeb/node_modules/gulp/bin/gulp.js --max_old_space_size=1500'
 
 function buildix {
 	if [[ -f $IX/makefile || -f $IX/Makefile ]]; then
