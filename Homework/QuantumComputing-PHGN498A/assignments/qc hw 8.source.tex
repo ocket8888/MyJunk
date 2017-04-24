@@ -1,0 +1,321 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{qcircuit}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\makeatletter
+\gdef\lst@numberfirstlinefalse{\global\let\lst@ifnumberfirstline\iffalse}
+\lst@AddToHook{Init}{\global\let\lst@ifnumberfirstline\iftrue}
+\makeatother
+
+\definecolor{orchid}{HTML}{F92672}
+\definecolor{sundriedClay}{HTML}{272822}
+\definecolor{offGray}{HTML}{595959}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{comment}{HTML}{75715E}
+\definecolor{stringlit}{HTML}{E6DB74}
+\definecolor{secondaryKeyword}{HTML}{66D9EF}
+\definecolor{monokaiGreen}{HTML}{A6E22E}
+\definecolor{wolframfunc}{HTML}{FD971F}
+\definecolor{monokaiPurple}{HTML}{AE81FF}
+
+\lstdefinelanguage{Wolfram}{
+   backgroundcolor=\color{sundriedClay},
+   keywords={do,while,if,else,\_,:=},
+   morekeywords=[2]{a,b,c},
+   otherkeywords={+,=,.,[,],/,\{,\},\,,>,<,^},
+   morekeywords=[3]{FullSimplify,MatrixExp,Exp,Sin,Cos,Part,ArcTan,Norm,Abs,Arg},
+   morekeywords=[4]{Reals,Complexes,Imaginaries,I,E,List},
+   keywordstyle=\color{orchid}\bfseries,
+   keywordstyle=[2]{\color{secondaryKeyword}},
+   keywordstyle=[3]{\itshape\color{monokaiGreen}},
+   keywordstyle=[4]{\bfseries\color{monokaiPurple}},
+   identifierstyle=\color{white},
+   basicstyle=\footnotesize\ttfamily\color{white},
+   comment=[s]{(*}{*)},
+   commentstyle=\color{comment}\ttfamily,
+   stringstyle=\color{stringlit}\ttfamily
+}
+
+\lstset{
+   literate=%
+*{0}{{{\bfseries\color{monokaiPurple}{0}}}}1
+{1}{{{\bfseries\color{monokaiPurple}{1}}}}1
+{2}{{{\bfseries\color{monokaiPurple}{2}}}}1
+{3}{{{\bfseries\color{monokaiPurple}{3}}}}1
+{4}{{{\bfseries\color{monokaiPurple}{4}}}}1
+{5}{{{\bfseries\color{monokaiPurple}{5}}}}1
+{6}{{{\bfseries\color{monokaiPurple}{6}}}}1
+{7}{{{\bfseries\color{monokaiPurple}{7}}}}1
+{8}{{{\bfseries\color{monokaiPurple}{8}}}}1
+{9}{{{\bfseries\color{monokaiPurple}{9}}}}1,
+mathescape=true,
+language=Wolfram,
+showstringspaces=false,
+showspaces=false,
+tabsize=2,
+breaklines=true,
+showtabs=false,
+captionpos=t,
+extendedchars=true,
+frame=l,
+framesep=4.5mm,
+framexleftmargin=2.5mm,
+fillcolor=\color{sundriedClay},
+rulecolor=\color{offGray},
+numberstyle=\normalfont\tiny\color{white},
+numbers=left
+}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+%If you want to title your bold things something different just make another thing exactly like this but replace "problem" with the name of the thing you want, like theorem or lemma or whatever
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+%Good resources for looking up how to do stuff:
+%Binary operators: http://www.access2science.com/latex/Binary.html
+%General help: http://en.wikibooks.org/wiki/LaTeX/Mathematics
+%Or just google stuff
+ 
+\title{Quantum Computing Assignment 8}
+\author{Brennan W. Fieck}
+\date{April 8$^\textnormal{th}$, 2017}
+\maketitle
+
+\begin{problem}{5.2.1}
+Prove that\\
+\begin{equation}
+\tag{5.2.8}
+|\psi\rangle|\beta_{00}\rangle=\frac{1}{2}|\beta_{00}\rangle|\psi\rangle+\frac{1}{2}|\beta_{01}\rangle(X|\psi\rangle)+\frac{1}{2}|\beta_{10}\rangle(Z|\psi\rangle)+\frac{1}{2}|\beta_{11}\rangle(XZ|\psi\rangle)
+\end{equation}
+\end{problem}
+
+\begin{proof}[Solution]~\\
+Since any arbitrary state $|\phi\rangle$ can be written in the form $|\phi\rangle=a|0\rangle+b|1\rangle$, let
+$$|\psi\rangle=a|0\rangle+b|1\rangle$$
+Also, recall the definitions of the Bell States:
+$$|\beta_{00}\rangle=\begin{bmatrix}
+\frac{1}{\sqrt{2}} & 0\\
+0 & \frac{1}{\sqrt{2}}
+\end{bmatrix}\;\;\;\;\;\;|\beta_{01}\rangle=\begin{bmatrix}
+0 & \frac{1}{\sqrt{2}}\\
+\frac{1}{\sqrt{2}} & 0
+\end{bmatrix}$$
+
+$$|\beta_{10}\rangle=\begin{bmatrix}
+\frac{1}{\sqrt{2}} & 0\\
+0 & -\frac{1}{\sqrt{2}}
+\end{bmatrix}\;\;\;\;\;\;|\beta_{11}\rangle=\begin{bmatrix}
+0 & \frac{1}{\sqrt{2}}\\
+-\frac{1}{\sqrt{2}} & 0
+\end{bmatrix}$$
+Now it's useful to re-write the expression using matrices, because brute-force on this is really easy.
+$$\frac{1}{2}\left(\begin{bmatrix}
+\frac{a}{\sqrt{2}} & 0\\
+\frac{b}{\sqrt{2}} & 0\\
+0 & \frac{a}{\sqrt{2}}\\
+0 & \frac{b}{\sqrt{2}}
+\end{bmatrix}
++\begin{bmatrix}
+0 & \frac{1}{\sqrt{2}}\\
+\frac{1}{\sqrt{2}} & 0
+\end{bmatrix}\otimes\left(\begin{bmatrix}
+b\\
+a
+\end{bmatrix}\right)+\begin{bmatrix}
+\frac{1}{\sqrt{2}} & 0\\
+0 & -\frac{1}{\sqrt{2}}
+\end{bmatrix}\otimes\left(\begin{bmatrix}
+a\\-b
+\end{bmatrix}\right)+\begin{bmatrix}
+0 & \frac{1}{\sqrt{2}}\\
+-\frac{1}{\sqrt{2}} & 0
+\end{bmatrix}\left(
+\begin{bmatrix}
+0 & -1\\
+1 & 0
+\end{bmatrix}\otimes\begin{bmatrix}
+a\\
+b
+\end{bmatrix}\right)\right)
+$$
+$$=\frac{1}{2}\left(\begin{bmatrix}
+\frac{a}{\sqrt{2}} & 0\\
+\frac{b}{\sqrt{2}} & 0\\
+0 & \frac{a}{\sqrt{2}}\\
+0 & \frac{b}{\sqrt{2}}
+\end{bmatrix}+\begin{bmatrix}
+0 & \frac{b}{\sqrt{2}}\\
+0 & \frac{a}{\sqrt{2}}\\
+\frac{b}{\sqrt{2}} & 0\\
+\frac{a}{\sqrt{2}} & 0
+\end{bmatrix}+\begin{bmatrix}
+\frac{a}{\sqrt{2}} & 0\\
+-\frac{b}{\sqrt{2}} & 0\\
+0 & -\frac{a}{\sqrt{2}}\\
+0 & \frac{b}{\sqrt{2}}
+\end{bmatrix}+\begin{bmatrix}
+0 & -\frac{b}{\sqrt{2}}\\
+0 & \frac{a}{\sqrt{2}}\\
+\frac{b}{\sqrt{2}} & 0\\
+-\frac{a}{\sqrt{2}} & 0
+\end{bmatrix}\right)$$
+
+$$=\frac{1}{2}\begin{bmatrix}
+\frac{2a}{\sqrt{2}} & 0\\
+0 & \frac{2a}{\sqrt{2}}\\
+\frac{2b}{\sqrt{2}} & 0\\
+0 & \frac{2b}{\sqrt{2}}
+\end{bmatrix}=\begin{bmatrix}
+\frac{a}{\sqrt{2}} & 0\\
+0 & \frac{a}{\sqrt{2}}\\
+\frac{b}{\sqrt{2}} & 0\\
+0 & \frac{b}{\sqrt{2}}
+\end{bmatrix}=|\psi\rangle|\beta_{00}\rangle$$
+\end{proof}
+
+\begin{problem}{6.1.2}~\\
+\begin{enumerate}[label=(\alph*)]
+  \item Describe complex numbers $\alpha_i$, $i=0,1,\ldots,N-1$ satisfying
+	$$\sum_i|\alpha_i|^2=1\text{ and }\left|\sum_i\alpha_i\right|^2=0$$
+  \item Describe complex numbers $\alpha_i$, $i=0,1,\ldots,N-1$ satisfying
+  	$$\sum_i|\alpha_i|^2=\frac{1}{N}\text{ and }\left|\sum_i\alpha_i\right|^2=1$$
+\end{enumerate}~\\[0.3in]
+\emph{Hint: It is useful to consider the geometric interpretation of the complex numbers $\alpha_i$}
+\end{problem}
+
+\begin{proof}[Solution.]~\\
+\begin{enumerate}[label=(\alph*)]
+\item Most obviously, 
+$$\left|\sum_i[\alpha_i]\right|^2=0\iff\left|\sum_i[\alpha_i]\right|=0\iff\sum_i[\alpha_i]=0$$
+which means that the sum of the real and imaginary parts of these $\alpha_i$ each sum to 0. This means that valid
+$\alpha_i$ sequences consist of phasors that are perfectly balanced about the origin. If that statement is confusing, don't
+worry, because the other equation will clear it up. I found it helpful to separate $\alpha_i$ into its real and imaginary
+components according to $\alpha_i=x_i+iy_i$.
+$$1=\sum_i\left[|\alpha_i|^2\right]=\sum_i[\alpha_i\alpha_i^*]=\sum_i[(x+iy)(x-iy)]=\sum_i[x^2+y^2]$$
+If $N=1$ or $N=0$, the sequence constraints cannot be satisfied. In the case that $N=2$, the only real constraints we have are
+$\alpha_0=-\alpha_1$ and $|\alpha_0|^2+|\alpha_1|^2=1$. These phasors can take any pair of values that lie on opposite
+sides of a circle in the complex plane with radius $1$. When $N=3$, you get a triangle. When $N=4$, a rectangle. A visual aid
+is below.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.46\textwidth]{n2}\hfill
+\includegraphics[width=0.46\textwidth]{n3}\\
+\includegraphics[width=0.46\textwidth]{n4}
+\label{fig:circles}
+\caption{Reading Order: $N=2$, $N=3$, $N=4$}
+\end{figure}
+(Red areas are everywhere points can exist, blue is an example set of values for the sequence.)
+So these numbers appear to represent $N$-sided figures that fit within the complex unit circle. Note that reaching the edge
+of the unit circle generally requires using two opposing points just like when $N=1$, and just setting the remaining terms of
+$\alpha_i$ to zero.
+
+\item If we once again do a study of specific $N$ values, we see that for $N=1$, $\alpha$ can be any phasor on the complex
+unit circle, because its only constraint is that its magnitude must be 1. If $N=2$, a simple solution for the sequence values
+on the complex plane is $\alpha_0=\alpha_1$ where $|\alpha|=1/2$, that is when both points sit at the same point on a circle
+of radius $1/2$. In fact, these are the only solutions, because no phasor with a magnitude over $1/2$ can exist in the
+sequence (via the first equation) and no sum of two phasors with magnitude less than $1/2$ can add to form a phasor with a
+magnitude of 1 (via the second equation). Furthermore, if the points are allowed to diverge angularly, they won't add to
+a phasor on the unit circle (which is essentially what the second equation requires). Thus we know that $\alpha_i$ doesn't
+vary with $i$, which allows us to reduce the first equation like this:
+$$\sum_i[|\alpha_i|^2]=N|\alpha|^2=\frac{1}{N}\to|\alpha|=\frac{1}{N}$$
+(the other equation reduces to this exact equation also), which is to say that the sequence $\alpha_i$ just allows for
+solutions where every sequence term is equal, and all lie on a circle of radius $1/N$ in the complex plane.
+\end{enumerate}
+\end{proof}
+
+\begin{problem}{6.4.2a}
+Show that a probabilistic classical algorithm making 2 evaluations of $f$ can with
+probability at least $\frac{2}{3}$ correctly determine whether $f$ is constant or balanced.\\[0.3in]
+\emph{Hint: Your guess does not need to be a deterministic function of the results of the two queries. Your result
+should not assume any particular a priori probabilities of having a constant or balanced function.}
+\end{problem}
+
+\begin{proof}[Solution.]~\\
+So the only possible outcomes of the two evaluations are
+\begin{table}[H]
+\centering
+\begin{tabular}{cc}
+1 & 1\\
+\hline
+1 & 0\\
+\hline
+0 & 1\\
+\hline
+0 & 0
+\end{tabular}
+\end{table}
+with a 25\% chance of getting any particular one. This means that 50\% of the time, you'll be
+able to tell right away that the function isn't constant (when you get 0 1 or 1 1) However, the other half of the time it'll be hard to tell right away. Suppose the probabilistic classical algorithm outputs in these cases a confirmation of the function being balanced $1/3^\text{rd}$ of the time and a confirmation of the function being constant the other $2/3^\text{rd}$s of the time. This means that if the function actually is balanced, using random input strings we'll report that the function is balanced $1/2+1/2(1/3)=2/3^\text{rd}$s of the time and if the function is actually constant we'll report that the function is constant $2/3^\text{rd}$s of the time as well. Then the probability that the output is correct is simply
+$$P[\text{correct}]=P[\text{balanced and reported balanced}]+P[\text{constant and reported constant}]$$
+$$=P[\text{reported balanced given that the function is balanced}]\cdot P[\text{function is balanced}]+$$
+$$P[\text{reported balanced given that the function is constant}]\cdot P[\text{function is constant}]$$
+$$=\frac{2}{3}P[\text{function is balanced}]+\frac{2}{3}P[\text{function is constant}]$$
+$$=\frac{2}{3}(P[\text{function is balanced}]+P[\text{function is constant}])$$
+Since we're given the promise that the function must be either balanced or constant,\\ $P[\text{function is balanced}]+P[\text{function is constant}]=1$ and so the probability of guessing correctly with this algorithm is $\frac{2}{3}$
+\end{proof}
+
+\begin{problem}{6.5.1}
+Let $\mathbf{x},\mathbf{y}\in\{0,1\}^n$ and let $\mathbf{s}=\mathbf{x}\oplus\mathbf{y}$. Show that
+
+\begin{equation}
+\label{eq:exponent cross product}
+\tag{6.5.5}
+H^{\otimes n}\left(\frac{1}{\sqrt{2}}|x\rangle+\frac{1}{\sqrt{2}}|y\rangle\right)
+=
+\frac{1}{\sqrt{2^{n-1}}}\sum_{\mathbf{z}\in\{\mathbf{s}\}^\perp}(-1)^{\mathbf{x}\cdot\mathbf{z}}|\mathbf{z}\rangle
+\end{equation}
+
+\end{problem}
+
+\begin{proof}[Solution.]~\\
+The key to solving this is in remembering the operation of the Hadamard gate.
+$$H|0\rangle=|+\rangle\;\;\;\;H|+\rangle=|0\rangle\;\;\;\;\;H|1\rangle=|-\rangle\;\;\;\;H|-\rangle=H|1\rangle$$
+Now, from the distributive property of the matrix inner product over matrix addition, and
+subsequently the distributive property of matrix inner product over the Kronecker product, we
+know that the left side means that every component of $|x\rangle$ and $|y\rangle$ will be hit
+with the Hadamard gate. Every time this occurs ($n$ times), a further factor of $1/\sqrt{2}$,
+is applied which we can immediately see will be distributable and account for the term
+$1/\sqrt{2^n-1}$ on the right. The sum is a bit trickier. First, note that since $z\perp s$
+it's also fair to say that $z=x\texttt{XNOR}y$ which means that
+each component of $z=1$ if the corresponding $x=y$, and $z=0$ if $x\neq y$. So if, for
+example, $n=1$ and $|x\rangle=|0\rangle$, $|y\rangle=|1\rangle$, then $|z\rangle=|0\rangle$.
+That makes sense, since on the left, the Hadamard operation yields terms of $|+\rangle+|
+-\rangle=|0\rangle$ (ignoring factors of $1/\sqrt{2}$). The sign is correct, because $x\cdot
+z=x\cdot\overline{x\oplus y}$ which in this case is
+$0\cdot\overline{0\oplus1}=0\cdot\overline{0}=0\cdot1=0$, so it's positive. This also works
+under the other three possible combinations of values for $|x\rangle$ and $|y\rangle$, but
+that's a bit annoying to work out, even for me. Just trust me. And since we now know this
+works for any arbitrary component of each side of the equation - and because $\otimes$ is the
+same aggregator of these components on each side - it follows inductively that the relation
+holds.
+\end{proof}
+
+\begin{problem}{6.5.2}~\\
+\begin{proof}[Solution.]~\\
+Each component matrix of $S^\perp$ is perpendicular to a corresponding component of $S$. So if a certain component state of one of these matrices is a $|0\rangle$, it has a "shadow" in $S$ that is $|1\rangle$.\\
+And now I give up on this one. Those tax statement split reviews don't query for themselves, and I really shouldn't be doing this on company time anyway.
+\end{proof}
+\end{problem}
+
+\begin{problem}{H1}
+In Ch. 6 we have employed the operator $U_f$ taking a state $|x\rangle|y\rangle$ to the state $|x\rangle|y\oplus f(x)\rangle$. (i) What are the eigenvalues of $U_f$? (ii) Show that $U_f$ is both unitary and Hermitian.
+\end{problem}
+
+\begin{proof}[Solution.]~\\
+The eigenvalues of $U_f$ are $(-1)^{f[x]}$. Because the range of $f[x]$ is $\{0,1\}$, these must all be real, and therefore
+$U_f$ is Hermitian. Furthermore, $\forall x\in\{0,1\}^n(|(-1)^{f[x]}|=1)$ and so $U_f$ must be unitary.
+\end{proof}
+
+\end{document}
