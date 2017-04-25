@@ -32,6 +32,14 @@
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
+		},
+		{
+			"file": "/home/ocket8888/.ssh/id_rsa.pub",
+			"settings":
+			{
+				"buffer_size": 401,
+				"line_ending": "Unix"
+			}
 		}
 	],
 	"build_system": "Packages/User/LaTeX.sublime-build",
@@ -292,13 +300,13 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
 		},
 		{
-			"selected": 1,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -329,7 +337,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -354,6 +362,35 @@
 							"function_name_status_row": 40,
 							"git_gutter_enabled": true,
 							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/home/ocket8888/.ssh/id_rsa.pub",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 401,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								401
+							]
+						],
+						"settings":
+						{
+							"function_name_status_row": 0,
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
