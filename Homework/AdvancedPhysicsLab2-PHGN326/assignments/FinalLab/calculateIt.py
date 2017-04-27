@@ -33,8 +33,8 @@ def AngleFromBin(channel):
 	return numpy.arccos(1.0-(((1.0/(1.0-(channel/662.0)))-1.0)/a))
 
 def Ndet(binA, binB):
-	return sum(datalist[binA:binB+1])/1200.0
-	#return sum(datalist[binA:binB+1])/(numpy.pi*((1.75*2.54/2)**2))/1200.0
+	#return sum(datalist[binA:binB+1])/1200.0
+	return sum(datalist[binA:binB+1])/(numpy.pi*((1.75*2.54/2)**2))/1200.0
 
 def crossSection(bin1, bin2):
 	return Ndet(bin1, bin2)/(Nbeam*Ntargets*dOmega(AngleFromBin(bin1), AngleFromBin(bin2)))
