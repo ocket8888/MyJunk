@@ -44,5 +44,5 @@ for groupSize in [3, 5, 10]:
 	for channel in range(0, 478, groupSize):
 		if channel+groupSize-1 > 477:
 			break
-		print((channel, channel+groupSize-1, crossSection(channel, channel+groupSize-1)))
+		print(repr((AngleFromBin(channel)+AngleFromBin(channel+groupSize-1))/2) + ", " + repr(crossSection(channel, channel+groupSize-1)))
 
