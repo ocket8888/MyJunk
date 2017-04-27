@@ -40,9 +40,11 @@ def crossSection(bin1, bin2):
 	return Ndet(bin1, bin2)/(Nbeam*Ntargets*dOmega(AngleFromBin(bin1), AngleFromBin(bin2)))
 
 def Theoretical(angle):
-	parts = (((numpy.cos(angle)**2.0)+1)*0.5*((2.8/(10.0**13))**2), \
-		((4*a*(numpy.sin(angle/2.0)**4)+1)/(((numpy.cos(angle)**2)+1)*((2*a*(numpy.sin(angle/2.0)**2))+1)))+1, \
-		1.0/((2*a*(numpy.sin(angle/2.0)**2))+1) )
+	part1 = ((numpy.cos(angle)**2.0)+1)*0.5*((2.8/(10.0**13))**2)
+	part2 = ((4*a*(numpy.sin(angle/2.0)**4)+1)/(((numpy.cos(angle)**2)+1)*((2*a*(numpy.sin(angle/2.0)**2))+1)))+1
+	part3 = 1.0/((2*a*(numpy.sin(angle/2.0)**2))+1)
+
+	return part1*part2*part3
 
 def experimental():
 	for groupSize in [3, 5, 10]:
@@ -53,7 +55,8 @@ def experimental():
 			print(repr((AngleFromBin(channel)+AngleFromBin(channel+groupSize-1))/2) + ", " + repr(crossSection(channel, channel+groupSize-1)))
 
 xvals = numpy.linspace(0, numpy.pi, 500)
-
-plt.plot(xvals, [Theoretical(val) for val in xvals])
+yvals = [Theoretical(val) for val in xvals]
+print(max(yvals))
+plt.plot(xvals, yvals)
 
 plt.show()
