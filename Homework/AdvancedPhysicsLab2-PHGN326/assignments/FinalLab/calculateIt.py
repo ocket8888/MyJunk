@@ -2,7 +2,6 @@
 
 from sys import argv
 import numpy
-from matplotlib import pyplot as plt
 
 data = open(argv[1]).read().strip().split("\n")
 
@@ -34,7 +33,8 @@ def AngleFromBin(channel):
 	return numpy.arccos(1.0-(((1.0/(1.0-(channel/662.0)))-1.0)/a))
 
 def Ndet(binA, binB):
-	return sum(datalist[binA:binB+1])/(numpy.pi*((1.75*2.54/2)**2))/1200.0
+	return sum(datalist[binA:binB+1])/1200.0
+	#return sum(datalist[binA:binB+1])/(numpy.pi*((1.75*2.54/2)**2))/1200.0
 
 def crossSection(bin1, bin2):
 	return Ndet(bin1, bin2)/(Nbeam*Ntargets*dOmega(AngleFromBin(bin1), AngleFromBin(bin2)))
@@ -46,17 +46,14 @@ def Theoretical(angle):
 
 	return part1*part2*part3
 
-def experimental():
-	for groupSize in [3, 5, 10]:
-		print("---------- Group Size " + repr(groupSize) + " ----------")
-		for channel in range(0, 478, groupSize):
-			if channel+groupSize-1 > 477:
-				break
-			print(repr((AngleFromBin(channel)+AngleFromBin(channel+groupSize-1))/2) + ", " + repr(crossSection(channel, channel+groupSize-1)))
 
-xvals = numpy.linspace(0, numpy.pi, 500)
-yvals = [Theoretical(val) for val in xvals]
-print(max(yvals))
-plt.plot(xvals, yvals)
+for groupSize in [3, 5, 10]:
+	print("---------- Group Size " + repr(groupSize) + " ----------")
+	for channel in range(0, 477, groupSize):
+		upperBound = channel+groupSize-1
+		if upperBound > 476:
+			break
+		avgAngle = (AngleFromBin(channel)+AngleFromBin(upperBound))/2
+		print(repr(avgAngle) + "," + repr(Theoretical(avgAngle)) + repr(crossSection(channel, upperBound)))
 
-plt.show()
+
