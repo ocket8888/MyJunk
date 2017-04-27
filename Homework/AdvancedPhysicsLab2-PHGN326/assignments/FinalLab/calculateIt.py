@@ -2,6 +2,7 @@
 
 from sys import argv
 import numpy
+from matplotlib import pyplot as plt
 
 data = open(argv[1]).read().strip().split("\n")
 
@@ -38,11 +39,21 @@ def Ndet(binA, binB):
 def crossSection(bin1, bin2):
 	return Ndet(bin1, bin2)/(Nbeam*Ntargets*dOmega(AngleFromBin(bin1), AngleFromBin(bin2)))
 
+def Theoretical(angle):
+	parts = (((numpy.cos(angle)**2.0)+1)*0.5*((2.8/(10.0**13))**2), \
+		((4*a*(numpy.sin(angle/2.0)**4)+1)/(((numpy.cos(angle)**2)+1)*((2*a*(numpy.sin(angle/2.0)**2))+1)))+1, \
+		1.0/((2*a*(numpy.sin(angle/2.0)**2))+1) )
 
-for groupSize in [3, 5, 10]:
-	print("---------- Group Size " + repr(groupSize) + " ----------")
-	for channel in range(0, 478, groupSize):
-		if channel+groupSize-1 > 477:
-			break
-		print(repr((AngleFromBin(channel)+AngleFromBin(channel+groupSize-1))/2) + ", " + repr(crossSection(channel, channel+groupSize-1)))
+def experimental():
+	for groupSize in [3, 5, 10]:
+		print("---------- Group Size " + repr(groupSize) + " ----------")
+		for channel in range(0, 478, groupSize):
+			if channel+groupSize-1 > 477:
+				break
+			print(repr((AngleFromBin(channel)+AngleFromBin(channel+groupSize-1))/2) + ", " + repr(crossSection(channel, channel+groupSize-1)))
 
+xvals = numpy.linspace(0, numpy.pi, 500)
+
+plt.plot(xvals, [Theoretical(val) for val in xvals])
+
+plt.show()
