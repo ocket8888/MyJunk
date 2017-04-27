@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from sys import argv
-import numpy
+from numpy import pi, sin, cos, arccos
 
 data = open(argv[1]).read().strip().split("\n")
 
@@ -19,18 +19,17 @@ for line in data:
 			break
 		datalist.append(int(line))
 
-numpy.seterr(all="print")
-
 #Some constants
 Nbeam = 118.331
 Ntargets = 2.39602*(10**24)
 a = 1.217224
+ro = 2.8*(10**13)
 
 def dOmega(theta1, theta2):
-	return 2.0*numpy.pi*numpy.sin((theta1+theta2)/2.0)*(theta2-theta1)
+	return 2.0*pi*sin((theta1+theta2)/2.0)*(theta2-theta1)
 
 def AngleFromBin(channel):
-	return numpy.arccos(1.0-(((1.0/(1.0-(channel/662.0)))-1.0)/a))
+	return arccos(1.0-(((1.0/(1.0-(channel/662.0)))-1.0)/a))
 
 def Ndet(binA, binB):
 	return sum(datalist[binA:binB+1])/1200.0
@@ -40,11 +39,11 @@ def crossSection(bin1, bin2):
 	return Ndet(bin1, bin2)/(Nbeam*Ntargets*dOmega(AngleFromBin(bin1), AngleFromBin(bin2)))
 
 def Theoretical(angle):
-	part1 = ((numpy.cos(angle)**2.0)+1)*0.5*((2.8/(10.0**13))**2)
-	part2 = ((4*a*(numpy.sin(angle/2.0)**4)+1)/(((numpy.cos(angle)**2)+1)*((2*a*(numpy.sin(angle/2.0)**2))+1)))+1
-	part3 = 1.0/((2*a*(numpy.sin(angle/2.0)**2))+1)
+	part1 = ((cos(angle)**2.0)+1.0)*0.5*(ro**2)/((1.0+(2.0*a*(sin(angle/2.0)**2)))**2)
+	part2 = (1.0+(4.0*(a**2)*(sin(angle/2.0)**2)))
+	part3 = (1.0+(cos(angle)**2))*(1.0+(2.0*a*(sin(angle/2.0)**2)))
 
-	return part1*part2*part3
+	return part1*part2/part3
 
 
 for groupSize in [3, 5, 10]:
