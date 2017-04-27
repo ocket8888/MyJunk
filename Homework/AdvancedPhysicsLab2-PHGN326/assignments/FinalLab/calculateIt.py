@@ -39,5 +39,10 @@ def crossSection(bin1, bin2):
 	return Ndet(bin1, bin2)/(Nbeam*Ntargets*dOmega(AngleFromBin(bin1), AngleFromBin(bin2)))
 
 
+for groupSize in [3, 5, 10]:
+	print("---------- Group Size " + repr(groupSize) + " ----------")
+	for channel in range(0, 478, groupSize):
+		if channel+groupSize-1 > 477:
+			break
+		print((channel, channel+groupSize-1, crossSection(channel, channel+groupSize-1)))
 
-print(crossSection(1,12))
