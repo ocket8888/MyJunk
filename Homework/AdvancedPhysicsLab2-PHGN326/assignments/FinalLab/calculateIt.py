@@ -54,6 +54,6 @@ for groupSize in [3, 5, 10]:
 		if upperBound > 476:
 			break
 		avgAngle = (AngleFromBin(channel)+AngleFromBin(upperBound))/2
-		print(repr(avgAngle) + "," + repr(Theoretical(avgAngle)) + repr(crossSection(channel, upperBound)))
+		print(repr(avgAngle) + "," + repr(Theoretical(avgAngle)) + "," + repr(crossSection(channel, upperBound)))
 
 
