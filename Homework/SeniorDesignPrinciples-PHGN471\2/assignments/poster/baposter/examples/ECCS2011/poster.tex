@@ -81,7 +81,7 @@
 }
 %%% Title %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 {\sf\bf
-	Improvements to Spatial Frequency Modulated Imaging
+	Spatial Frequency Modulated Imaging (SPIFI)
 }
 %%% Authors %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 {
@@ -187,17 +187,16 @@ This team wrote software which simulated this 2-dimensional SPIFI technique as a
 
 \headerbox{Photon Counting}
 {name=degreeDistribution,span=2,column=1,below=density}{
-Photon counting refers to analyzing the collected output of a SPIFI system (1D or 2D; both can utilize photon counting) to resolve the detection of individual photons. This allows the frequency of individual photons to be easily resolved without having to perform Fourier analysis on a signal composite of all of the photons from a single burst of the laser. This allows for imaging of an object to be performed immediately, and is a simple enough process that it can be performed on a micro-controller or field-programmable gate array (FPGA). The actual hardware chosen was an Altera$^\textnormal{TM}$ DE0-Nano FPGA. Shown below is a sample timing diagram showing how individual photons can be related to bursts of the laser.\\
+Photon counting refers to analyzing the collected output of a SPIFI system (1D or 2D; both can utilize photon counting) to resolve the detection of individual photons. Photon counting improves the sensitivity of our detection as a function of time. The signal must still be transformed to extract the final image. The detection is a simple enough process that it can be performed on a micro-controller or field-programmable gate array (FPGA). The actual hardware chosen was an Altera$^\textnormal{TM}$ DE0-Nano FPGA. Shown below is a sample timing diagram showing how individual photons can be related to bursts of the laser.\\
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\textwidth]{pix/sample-timing-diagram}
 \end{figure}
-Note that this much more sparse than one would typically expect, to make it more readable.
 }
 
 \headerbox{Software Notes}
 {name=notes,span=2,column=1,below=degreeDistribution,above=bottom}{
-	Unfortunately, the source code cannot be included here, as the research is still pending publication. At the time of publication, the source will be made available to the community along with its respective documentation.
+	Unfortunately, the research is still pending publication. At the time of publication, the source will be made available to the community along with its respective documentation.
 Once released, the software is provided under the GNU Public License version 3. The simulation is written in the open Python 3.5.2 standard, with a list of free and open source dependencies that will be made available at the same time as the simulation itself. The FPGA code was written using the Quartus software which is the property of Altera$^\textnormal{\small TM}$, along with various pieces of supporting software each of which is subject to its own license.
 }
 
