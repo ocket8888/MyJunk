@@ -1,0 +1,102 @@
+#!/usr/bin/env python3
+
+########################################################
+###	           Author: Brennan W. Fieck              ###
+###                                                  ###
+###       Description -                              ###
+###   This script defines a class (`Converter`)      ###
+### which is used to convert temperature             ###
+### measurements between Celsius, Farenheit, and     ###
+### Kelvin.                                          ###
+###                                                  ###
+###             Notes -                              ###
+### * The converter is not aware of "absolute zero," ###
+###       and will happily report impossible         ###
+###       temperatures when given one as a starting  ###
+###       point.                                     ###
+### * No type-checking occurs at any point; the      ###
+###       converter expects to get a number for a    ###
+###       temperature, and two strings as units.     ###
+###                                                  ###
+### !!!   Both of the above are because I was    !!! ###
+### !!! asked to check for "invalid conversions" !!! ###
+### !!!   and not invalid inputs. The converter  !!! ###
+### !!!  will recognize invalid units, however.  !!! ###
+###                                                  ###
+### * I assumed that the only use of the converter   ###
+###       was to immediately convert from one unit   ###
+###       to another "in-place," and so I didn't     ###
+###       consider the usefulness of a `Converter`   ###
+###       object at any intermediary state during    ###
+###       its design.                                ###
+###                                                  ###
+########################################################
+
+
+class Converter:
+	"""Converts temperatures between Kelvin, Farenheit and Celsius.
+	Usage: Converter().convert(temperature, unit).to(other_unit)
+	where `temperature` is a `float` and `unit` and `other_unit` are both strings (choose from 'C', 'K' and 'F')."""
+
+	def convert(self, temp, unit):
+		if unit == "C":
+			self.temps = { 'C': temp, 'K': temp+273.15, 'F': (9.*temp/5.)+32. }
+		elif unit == "K":
+			self.temps = { 'C': temp-273.15, 'K': temp, 'F': (9.*(temp-273.15)/5.)+32. }
+		elif unit == "F":
+			self.temps = { 'C': 5.*(temp-32.)/9., 'K': (5.*(temp-32.)/9.)+273.15, 'F': temp }
+		else:
+			raise Exception("'"+unit+"' is not a valid unit of temperature! Please use 'C', 'K', or 'F'.")
+		return self
+
+	def to(self, unit):
+		if not self.temps:
+			raise Exception("You must convert FROM something to get TO anything else!")
+		try:
+			return round(self.temps[unit], 2)
+		except KeyError as e:
+			raise Exception("'"+unit+"' is not a valid unit of temperature! Please use 'C', 'K', or 'F'.")
+
+
+#When run as the main executable script (e.g. via `python3 /path/to/convert.txt`),
+#the following tests are run. Since I wasn't asked to write tests, these were pretty
+#much just for me, and so I didn't feel the need to do anything more formal than print
+#the outcomes and expected outcomes for some sample conversions.
+if __name__ == '__main__':
+	print("running tests...")
+
+	#testing conversion from 32F to 0C and 273.15K
+	CelsiusResult = Converter().convert(32, "F").to("C")
+	KelvinResult = Converter().convert(32, "F").to("K")
+
+	print("F->C: expected 0.00, got "+repr(CelsiusResult))
+	print("F->K: expected 273.15, got "+repr(KelvinResult))
+
+	#testing conversion from -100C to 173.15K and -148F
+	KelvinResult = Converter().convert(-100, "C").to("K")
+	FarenheitResult = Converter().convert(-100, "C").to("F")
+
+	print("C->K: expected 173.15, got "+repr(KelvinResult))
+	print("C->F: expected -148.00, got "+repr(FarenheitResult))
+
+	#testing conversion from 270.05K to -3.1C and 26.42F
+	CelsiusResult = Converter().convert(270.05, "K").to("C")
+	FarenheitResult = Converter().convert(270.05, "K").to("F")
+
+	print("K->C: expected -3.10, got "+repr(CelsiusResult))
+	print("K->F: expected 26.42, got "+repr(FarenheitResult))
+
+	#testing invalid conversions
+	try:
+		Result = Converter().convert(1, "notaunit").to("C")
+	except Exception as e:
+		print("Conversion from 1'notaunit' to C failed (as expected): "+str(e))
+	else:
+		print("Conversion from 1'notaunit' to C erroneously succeeded with result: "+str(Result))
+
+	try:
+		Result = Converter().convert(1, "C").to("notaunit")
+	except Exception as e:
+		print("Conversion from 1C to 'notaunit' failed (as expected): "+str(e))
+	else:
+		print("Conversion from 1C to 'notaunit' erroneously succeeded with result: "+str(Result))
